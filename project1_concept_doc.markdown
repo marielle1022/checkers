@@ -1,4 +1,5 @@
 Concept Document: Checkers
+
 Authors: Marielle Riveros and Kevin Gendron
 
 What game are you going to build?

@@ -1,4 +1,4 @@
-# Checkersgame
+# Checkers
 
 To start your Phoenix server:
 

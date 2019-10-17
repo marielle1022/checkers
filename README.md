@@ -1,4 +1,4 @@
-#Install on your local machine:
+# Install on your local machine:
 
 wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
 apt update
@@ -8,13 +8,13 @@ apt install -y nodejs npm
 apt install -y postgresql postgresql-client libpq-dev
 
 
-#CREATE APP
+# CREATE APP
 $ mix phx.new hangman --no-ecto
 $ cd hangman
 $ mix phx.server
 
 
-#IN ASSETS
+# IN ASSETS
 $ rm static/images/phoenix.png
 $ rm css/phoenix.css
 $ npm install --save milligram
@@ -47,6 +47,6 @@ Add react preset to babel in webpack config:
 
 
 
-IN CSS
-# remove @import "./phoenix.css"
+# IN CSS
+remove @import "./phoenix.css"
 @import "~milligram/dist/milligram";

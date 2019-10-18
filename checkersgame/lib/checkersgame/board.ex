@@ -3,7 +3,7 @@ defmodule Checkersgame.Board do
   # Question: Should Piece module be nexted within this?
   alias Checkersgame.Board, as: Board
 
-  defstruct
+  # NB: use agents to implement states?!
 
   def new do
     %{

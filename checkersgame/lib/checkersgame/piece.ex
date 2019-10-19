@@ -133,6 +133,8 @@ defmodule Checkersgame.Piece do
 
           Checkersgame.Board.update_board(whole_board, original_x + 1, original_y + 1, 0)
           # add one to score for dark team
+          # INSTEAD -- subtract one token from total number of light tokens
+          Checkersgame.Board.update_score(whole_board, :light)
         else
           # This jump is not valid
           false
@@ -151,7 +153,7 @@ defmodule Checkersgame.Piece do
           )
 
           Checkersgame.Board.update_board(whole_board, original_x + 1, original_y - 1, 0)
-          # add one to score for dark team
+          Checkersgame.Board.update_score(whole_board, :light)
         else
           # This jump is not valid
           false
@@ -171,7 +173,7 @@ defmodule Checkersgame.Piece do
           )
 
           Checkersgame.Board.update_board(whole_board, original_x + 1, original_y + 1, 0)
-          # add one to score for LIGHT team
+          Checkersgame.Board.update_score(whole_board, :dark)
         else
           # This jump is not valid
           false
@@ -191,6 +193,7 @@ defmodule Checkersgame.Piece do
 
           Checkersgame.Board.update_board(whole_board, original_x + 1, original_y - 1, 0)
           # add one to score for LIGHT team
+          Checkersgame.Board.update_score(whole_board, :dark)
         else
           # This jump is not valid
           false
@@ -222,6 +225,7 @@ defmodule Checkersgame.Piece do
           # Does the matrix update the buttons?
           Checkersgame.Board.update_board(whole_board, original_x - 1, original_y - 1, 0)
           # add one to score for dark team
+          Checkersgame.Board.update_score(whole_board, :dark)
         else
           # This jump is not valid
           false
@@ -241,6 +245,7 @@ defmodule Checkersgame.Piece do
 
           Checkersgame.Board.update_board(whole_board, original_x - 1, original_y + 1, 0)
           # add one to score for dark team
+          Checkersgame.Board.update_score(whole_board, :dark)
         else
           # This jump is not valid
           false
@@ -263,6 +268,7 @@ defmodule Checkersgame.Piece do
           # Does the matrix update the buttons?
           Checkersgame.Board.update_board(whole_board, original_x - 1, original_y - 1, 0)
           # add one to score for dark team
+          Checkersgame.Board.update_score(whole_board, :light)
         else
           # This jump is not valid
           false
@@ -282,6 +288,7 @@ defmodule Checkersgame.Piece do
 
           Checkersgame.Board.update_board(whole_board, original_x - 1, original_y + 1, 0)
           # add one to score for dark team
+          Checkersgame.Board.update_score(whole_board, :light)
         else
           # This jump is not valid
           false

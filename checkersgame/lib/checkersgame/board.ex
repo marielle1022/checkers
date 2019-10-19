@@ -42,11 +42,19 @@ defmodule Checkersgame.Board do
   # Note: works in iex if pass board as parameter, but doesn't save
   def update_board(input_board, x, y, value) do
     new_board = put_in(input_board.game_board[x][y], value)
-    board |> Map.put(:game_board, new_board)
+    input_board |> Map.put(:game_board, new_board)
   end
 
   # Get value of game board
   def get_value(input_board, x, y) do
     input_board.game_board[x][y]
+  end
+
+  # Update value of number of tokens
+  def update_score(input_board, team) do
+    case team do
+      :dark -> input_board |> Map.put(:num_dark, :num_dark - 1)
+      :light -> input_board |> Map.put(:num_light, :num_light - 1)
+    end
   end
 end

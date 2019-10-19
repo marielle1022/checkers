@@ -53,8 +53,8 @@ defmodule Checkersgame.Board do
   # Update value of number of tokens
   def update_score(input_board, team) do
     case team do
-      :dark -> input_board |> Map.put(:num_dark, :num_dark - 1)
-      :light -> input_board |> Map.put(:num_light, :num_light - 1)
+      :dark -> input_board |> Map.put(:num_dark, input_board[:num_dark] - 1)
+      :light -> input_board |> Map.put(:num_light, input_board[:num_light] - 1)
     end
   end
 end

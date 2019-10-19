@@ -114,9 +114,175 @@ defmodule Checkersgame.Piece do
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
     team_piece = dark_piece.team
+
+    case {team_piece, x, y, value} do
+      {dark, original_x + 2, original_y + 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == 2 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x + 2,
+            original_y + 2,
+            1,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x + 1, original_y + 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+
+      {dark, original_x + 2, original_y - 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y - 1) == 2 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x + 2,
+            original_y - 2,
+            1,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x + 1, original_y - 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+
+      # Used for light kings
+      {light, original_x + 2, original_y + 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == 1 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x + 2,
+            original_y + 2,
+            2,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x + 1, original_y + 1, 0)
+          # add one to score for LIGHT team
+        else
+          # This jump is not valid
+          false
+        end
+
+      {light, original_x + 2, original_y - 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y - 1) == 1 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x + 2,
+            original_y - 2,
+            2,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x + 1, original_y - 1, 0)
+          # add one to score for LIGHT team
+        else
+          # This jump is not valid
+          false
+        end
+    end
   end
 
   # This checks intermediary square
   def check_light_single_jump(whole_board, light_piece, x, y, new_value) do
+    # Store original values for starting x, y of piece
+    original_x = light_piece.location_x
+    original_y = light_piece.location_y
+    team_piece = light_piece.team
+
+    case {team_piece, x, y, value} do
+      {light, original_x - 2, original_y - 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y - 1) == 1 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x - 2,
+            original_y - 2,
+            2,
+            light_piece
+          )
+
+          # This removes the intermediary piece from the matrix -- BUT How to remove the piece itself?
+          # Does the matrix update the buttons?
+          Checkersgame.Board.update_board(whole_board, original_x - 1, original_y - 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+
+      {light, original_x - 2, original_y + 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y + 1) == 1 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x - 2,
+            original_y + 2,
+            2,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x - 1, original_y + 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+
+      # Used for dark kings
+      {dark, original_x - 2, original_y - 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y - 1) == 2 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x - 2,
+            original_y - 2,
+            1,
+            light_piece
+          )
+
+          # This removes the intermediary piece from the matrix -- BUT How to remove the piece itself?
+          # Does the matrix update the buttons?
+          Checkersgame.Board.update_board(whole_board, original_x - 1, original_y - 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+
+      {dark, original_x - 2, original_y + 2} ->
+        if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y + 1) == 2 do
+          update_piece_board(
+            whole_board,
+            original_x,
+            original_y,
+            original_x - 2,
+            original_y + 2,
+            1,
+            dark_piece
+          )
+
+          Checkersgame.Board.update_board(whole_board, original_x - 1, original_y + 1, 0)
+          # add one to score for dark team
+        else
+          # This jump is not valid
+          false
+        end
+    end
   end
 end

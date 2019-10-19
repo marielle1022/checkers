@@ -6,12 +6,15 @@ defmodule Checkersgame.Piece do
   # TODO: figure out how state is being saved
   # TODO: see if functions can be cleaned up to take in fewer parameters
   # Reason there are so many parameters -- so can be used for multiple functions
-  # TODO: see if case syntax are correct (autoindent offf)
+  # TODO: see if cases syntax are correct (autoindent offf)
+  # TODO: Decide whether starting x, y should pe passed in instead of finding it using piece so that
+  #   functions can be used during BFS for multiple jumps
+  # TODO: figure out whether "team/rank" work as atoms
 
   def new do
     %{
-      rank: normal,
-      team: dark,
+      rank: :normal,
+      team: :dark,
       location_x: 0,
       location_y: 0
     }
@@ -19,8 +22,8 @@ defmodule Checkersgame.Piece do
 
   def check_valid(whole_board, piece, x, y) do
     case {piece.team, Checkersgame.Board.get_value(whole_board, x, y)} do
-      {dark, 0} -> check_dark(whole_board, piece, x, y, 1)
-      {light, 0} -> check_light(whole_board, piece, x, y, 2)
+      {:dark, 0} -> check_dark(whole_board, piece, x, y, 1)
+      {:light, 0} -> check_light(whole_board, piece, x, y, 2)
       # This means that the square clicked is light or occupied
       _ -> false
     end
@@ -116,7 +119,7 @@ defmodule Checkersgame.Piece do
     team_piece = dark_piece.team
 
     case {team_piece, x, y, value} do
-      {dark, original_x + 2, original_y + 2} ->
+      {:dark, original_x + 2, original_y + 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == 2 do
           update_piece_board(
             whole_board,
@@ -135,7 +138,7 @@ defmodule Checkersgame.Piece do
           false
         end
 
-      {dark, original_x + 2, original_y - 2} ->
+      {:dark, original_x + 2, original_y - 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y - 1) == 2 do
           update_piece_board(
             whole_board,
@@ -155,7 +158,7 @@ defmodule Checkersgame.Piece do
         end
 
       # Used for light kings
-      {light, original_x + 2, original_y + 2} ->
+      {:light, original_x + 2, original_y + 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == 1 do
           update_piece_board(
             whole_board,
@@ -174,7 +177,7 @@ defmodule Checkersgame.Piece do
           false
         end
 
-      {light, original_x + 2, original_y - 2} ->
+      {:light, original_x + 2, original_y - 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x + 1, original_y - 1) == 1 do
           update_piece_board(
             whole_board,
@@ -203,7 +206,7 @@ defmodule Checkersgame.Piece do
     team_piece = light_piece.team
 
     case {team_piece, x, y, value} do
-      {light, original_x - 2, original_y - 2} ->
+      {:light, original_x - 2, original_y - 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y - 1) == 1 do
           update_piece_board(
             whole_board,
@@ -224,7 +227,7 @@ defmodule Checkersgame.Piece do
           false
         end
 
-      {light, original_x - 2, original_y + 2} ->
+      {:light, original_x - 2, original_y + 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y + 1) == 1 do
           update_piece_board(
             whole_board,
@@ -244,7 +247,7 @@ defmodule Checkersgame.Piece do
         end
 
       # Used for dark kings
-      {dark, original_x - 2, original_y - 2} ->
+      {:dark, original_x - 2, original_y - 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y - 1) == 2 do
           update_piece_board(
             whole_board,
@@ -265,7 +268,7 @@ defmodule Checkersgame.Piece do
           false
         end
 
-      {dark, original_x - 2, original_y + 2} ->
+      {:dark, original_x - 2, original_y + 2} ->
         if Checkersgame.Board.get_value(whole_board, original_x - 1, original_y + 1) == 2 do
           update_piece_board(
             whole_board,

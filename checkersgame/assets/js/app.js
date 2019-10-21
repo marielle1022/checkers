@@ -18,8 +18,18 @@ import $ from "jquery";
 // import socket from "./socket"
 
 import game_init from "./starter-game";
+import socket from "./socket";
 
-$(() => {
-  let root = $('#root')[0];
-  game_init(root);
-});
+
+// Function provided by Nat Tuck in Git Hangman example
+function start() {
+  let root = document.getElementById('root');
+  if (root) {
+    socket.connect();
+    let channel = socket.channel("games:" + window.gameName, {});
+    game_init(root, channel);
+  }
+}
+
+$(start);
+

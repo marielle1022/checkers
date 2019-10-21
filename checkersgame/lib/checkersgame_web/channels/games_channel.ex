@@ -1,9 +1,13 @@
 defmodule CheckersgameWeb.GamesChannel do
   use CheckersgameWeb, :channel
 
-  def join("games:lobby", payload, socket) do
+  alias Checkersgame.GameServer
+
+  def join("games:" <> game, payload, socket) do
     if authorized?(payload) do
-      {:ok, socket}
+      socket = assign(socket, :game, game)
+      view = GameServer.view(game, socket.assigns[:user])
+      {:ok, %{"join" => game, "game" => view}, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end

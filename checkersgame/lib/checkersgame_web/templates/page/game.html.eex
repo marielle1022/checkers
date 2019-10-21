@@ -1,0 +1,13 @@
+  
+<script>
+ window.gameName = "<%= @game %>";
+</script>
+
+<div class="row">
+  <div class="column">
+    <h1>Checker Game: <%= @game %></h1>
+    <div id="root">
+      React component loading...
+    </div>
+  </div>
+</div>

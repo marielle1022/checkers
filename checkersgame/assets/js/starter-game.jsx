@@ -3,13 +3,28 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 export default function game_init(root) {
-  ReactDOM.render(<GameBoard />, root);
+  ReactDOM.render(<GameBoard channel={channel}/>, root);
 }
 
 class GameBoard extends Component {
-  state = {
-      board: this.createSquares() 
-  };
+  constructor(props) {
+    super(props)
+    this.channel = props.channel;
+    this.state = {
+        board: this.createSquares() 
+    };
+
+    this.channel
+        .join()
+        .receive("ok", this.got_view.bind(this))
+        .receive("error", resp => {cosole.log("Unable to join", resp); });
+    this.channel.on("update", this.got_view.bind(this));
+  }
+
+  got_view(view) {
+    console.log("new view", view);
+    this.setState(view.game);
+  }
 
 /*
 TODO: The code below can be reformatted. It's duplicated in multiple
@@ -71,21 +86,22 @@ per row.
   }
 
   //TODO: This is where we'll insert the channel push
-  handleClick = (square, i) => {
-      console.log("Row: " + square.row + ", Col: " + square.col)
-  }
+    handleClick(i) {
+        this.channel.push("click", {click: i})
+        .receive("ok", this.got_view.bind(this));
+    }
 
-  render() {
+    render() {
       console.log(this.state.board)
       return (
           <div className="game-board">
               {
               this.state.board.map((square, i) => (
                   square.type === 'red' ?
-                  <div key={i} className="game-square-red" onClick = {() => 
-                      {this.handleClick(square,i)}}/> :
-                  <div key={i} className="game-square-black" onClick = {() => 
-                      {this.handleClick(square,i)}}/>
+                  <div key={i} className="game-square-red game-square" onClick = {() => 
+                      {this.handleClick(i)}}/> :
+                  <div key={i} className="game-square-black game-square" onClick = {() => 
+                      {this.handleClick(i)}}/>
                   
               ))
               }
@@ -94,3 +110,12 @@ per row.
       );
   }
 }
+
+//TODO: Create function for Piece that sends piece clicks
+// See hangman/assets/js/hangman.jsx from Nat Tuck "Hangman" repository 
+// for reference.
+function square(props) {
+    return (
+      <button className="game-square" onClick={props.onClick}/>
+    );
+  }

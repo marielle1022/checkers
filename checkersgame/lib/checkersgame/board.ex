@@ -15,6 +15,11 @@ defmodule Checkersgame.Board do
     }
   end
 
+  # def client_view(board) do
+  #  board.game_board
+
+  # end
+
   # To create nested map, used
   # https://blog.danielberkompas.com/2016/04/23/multidimensional-arrays-in-elixir/
   def create_board do

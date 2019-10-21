@@ -9,7 +9,7 @@ defmodule Checkersgame.Application do
     # List all child processes to be supervised
     children = [
       # Start the endpoint when the application starts
-      CheckersgameWeb.Endpoint
+      CheckersgameWeb.Endpoint,
       # Starts a worker by calling: Checkersgame.Worker.start_link(arg)
       Checkersgame.GameServer
       # {Checkersgame.Worker, arg},

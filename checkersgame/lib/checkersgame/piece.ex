@@ -22,11 +22,26 @@ defmodule Checkersgame.Piece do
 
   def start_move_check_king(whole_board, piece, x, y) do
     if check_valid(whole_board, piece, x, y) != false do
-      if piece.rank(is(:normal and piece.team(is(:dark and x == 9)))) do
-        piece.rank = :king
-      else
-        if(piece.rank(is(:normal and piece.team(is(:light and x == 0)))))
-        piece.rank = :king
+      tempRank = piece.rank
+      tempTeam = piece.team
+
+      case {tempRank, tempTeam, x} do
+        {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
+          # piece.rank = :king
+          "Dark"
+
+        {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
+          # piece.rank = :king
+          "Light"
+
+        _ ->
+          "No change to rank"
+
+          # if piece.rank(is(:normal) and piece.team(is(:dark and x == 9))) do
+          #  piece.rank = :king
+          # else
+          #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
+          #  piece.rank = :king
       end
     end
   end

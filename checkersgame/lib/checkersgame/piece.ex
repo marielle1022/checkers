@@ -11,13 +11,24 @@ defmodule Checkersgame.Piece do
   #   functions can be used during BFS for multiple jumps
   # TODO: figure out whether "team/rank" work as atoms
 
-  def new do
+  def new(team, x, y) do
     %{
       rank: :normal,
-      team: :dark,
-      location_x: 0,
-      location_y: 0
+      team: team,
+      location_x: x,
+      location_y: y
     }
+  end
+
+  def start_move_check_king(whole_board, piece, x, y) do
+    if check_valid(whole_board, piece, x, y) != false do
+      if piece.rank(is(:normal and piece.team(is(:dark and x == 9)))) do
+        piece.rank = :king
+      else
+        if(piece.rank(is(:normal and piece.team(is(:light and x == 0)))))
+        piece.rank = :king
+      end
+    end
   end
 
   def check_valid(whole_board, piece, x, y) do
@@ -62,19 +73,19 @@ defmodule Checkersgame.Piece do
         update_piece_board(whole_board, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 2 and b == original_y + 2 ->
-        # if (Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == ) do
+        check_dark_single_jump(whole_board, dark_piece, x, y)
 
-        "Do something"
+      # if (Checkersgame.Board.get_value(whole_board, original_x + 1, original_y + 1) == ) do
 
       # Send to function checking valid 1 move jumps
 
-      {a, b} when a == original_x + 2 and b == original_y + 2 ->
-        "Do something"
+      {a, b} when a == original_x + 2 and b == original_y - 2 ->
+        check_dark_single_jump(whole_board, dark_piece, x, y)
 
       # Send to function checking valid 1 move jumps
 
       _ ->
-        "Do something"
+        "Send to check >1 move jumps"
         # With any other location, send to function checking valid >1 move jumps
     end
   end
@@ -96,23 +107,23 @@ defmodule Checkersgame.Piece do
         update_piece_board(whole_board, original_x, original_y, x, y, new_value, light_piece)
 
       {a, b} when a == original_x - 2 and b == original_y - 2 ->
-        "Do something"
+        check_light_single_jump(whole_board, light_piece, x, y)
 
       # Send to function checking valid 1 move jumps
 
       {a, b} when a == original_x - 2 and b == original_y + 2 ->
-        "Do something"
+        check_light_single_jump(whole_board, light_piece, x, y)
 
       # Send to function checking valid 1 move jumps
 
       _ ->
-        "Do something"
+        "Check valid >1 move jump"
         # With any other location, send to function checking valid >1 move jumps
     end
   end
 
   # This checks intermediary square
-  def check_dark_single_jump(whole_board, dark_piece, x, y, new_value) do
+  def check_dark_single_jump(whole_board, dark_piece, x, y) do
     # Store original values for starting x, y of piece
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
@@ -202,7 +213,7 @@ defmodule Checkersgame.Piece do
   end
 
   # This checks intermediary square
-  def check_light_single_jump(whole_board, light_piece, x, y, new_value) do
+  def check_light_single_jump(whole_board, light_piece, x, y) do
     # Store original values for starting x, y of piece
     original_x = light_piece.location_x
     original_y = light_piece.location_y

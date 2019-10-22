@@ -3,6 +3,7 @@ defmodule Checkersgame.GameServer do
   use GenServer
 
   alias Checkersgame.Game
+  alias Checkersgame.Board
 
   ## Client Interface
   def start_link(_args) do

@@ -2,7 +2,7 @@ defmodule Checkersgame.Board do
   # Note: Is this alias only usable within this module?
   # Question: Should Piece module be nexted within this?
   alias Checkersgame.Board, as: Board
-  use Checkersgame.Piece
+  import Checkersgame.Piece
 
   # NB: use agents to implement states?!
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
-export default function game_init(root) {
+export default function game_init(root, channel) {
   ReactDOM.render(<GameBoard channel={channel}/>, root);
 }
 
@@ -17,7 +17,7 @@ class GameBoard extends Component {
     this.channel
         .join()
         .receive("ok", this.got_view.bind(this))
-        .receive("error", resp => {cosole.log("Unable to join", resp); });
+        .receive("error", resp => {console.log("Unable to join", resp); });
     this.channel.on("update", this.got_view.bind(this));
   }
 

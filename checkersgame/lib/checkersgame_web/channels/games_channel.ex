@@ -3,6 +3,8 @@ defmodule CheckersgameWeb.GamesChannel do
 
   alias Checkersgame.GameServer
 
+  intercept ["update"]
+
   def join("games:" <> game, payload, socket) do
     if authorized?(payload) do
       socket = assign(socket, :game, game)

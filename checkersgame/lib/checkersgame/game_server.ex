@@ -12,4 +12,11 @@ defmodule Checkersgame.GameServer do
   def view(game, user) do
     GenServer.call(__MODULE__, {:view, game, user})
   end
+
+
+
+  def handle_call({:view, game, user}, _from, state) do
+    gg = Map.get(state, game, Board.new)
+    {:reply, Board.client_view(gg, user), Map.put(state, game, gg)}
+  end
 end

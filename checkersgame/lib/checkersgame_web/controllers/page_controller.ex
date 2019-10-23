@@ -9,10 +9,10 @@ defmodule CheckersgameWeb.PageController do
     conn
     |> put_session(:user, user)
     |> put_session(:game, game)
-    |> redirect(to: "/game/#{user}")
+    |> redirect(to: "/#{game}/#{user}")
   end
 
-  def game(conn) do
+  def game(conn, _params) do
     user = get_session(conn, :user)
     game = get_session(conn, :game)
 

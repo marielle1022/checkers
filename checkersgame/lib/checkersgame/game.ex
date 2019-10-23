@@ -22,21 +22,24 @@ defmodule Checkersgame.Game do
   # In game state - Have map w/ state
   # in board - store references to pieces
 
-  def client_view(game, name) do
-    client_board = game.game_board
-    current_dark = game.num_dark
-    current_light = game.num_light
-    list_dark = game.all_dark_pieces
-    list_light = game.all_light_pieces
-
-    %{
-      current_board: client_board,
-      num_dark: current_dark,
-      num_light: current_light,
-      dark_pieces: list_dark,
-      light_pieces: list_light
-    }
+  def client_view(game, ll) do
   end
+
+  # def client_view(game, name) do
+  #   client_board = game.game_board
+  #   current_dark = game.num_dark
+  #   current_light = game.num_light
+  #   list_dark = game.all_dark_pieces
+  #   list_light = game.all_light_pieces
+  #
+  #   %{
+  #     current_board: client_board,
+  #     num_dark: current_dark,
+  #     num_light: current_light,
+  #     dark_pieces: list_dark,
+  #     light_pieces: list_light
+  #   }
+  # end
 
   # To create nested map, used
   # https://blog.danielberkompas.com/2016/04/23/multidimensional-arrays-in-elixir/

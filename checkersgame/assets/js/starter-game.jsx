@@ -21,6 +21,8 @@ export default function game_init(root, channel) {
     *NB: need total numbers because there doesn't seem to be a simple way to seem
           if a map is empty
   */
+  
+  //TODO: ANYTIME ANYTHING is done, send it to backupagent
 class GameBoard extends Component {
   constructor(props) {
     super(props)

@@ -6,6 +6,8 @@ defmodule Checkersgame.Game do
 
   # NB: use agents to implement states?!
 
+  # TODO: ANYTIME ANYTHING is done, send it to backupagent
+
   def new do
     %{
       # set up matrix

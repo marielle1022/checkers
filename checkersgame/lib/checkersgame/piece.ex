@@ -11,6 +11,8 @@ defmodule Checkersgame.Piece do
   #   functions can be used during BFS for multiple jumps
   # TODO: figure out whether "team/rank" work as atoms
 
+  # TODO: ANYTIME ANYTHING is done, send it to backupagent
+
   def new(team, x, y) do
     %{
       rank: :normal,

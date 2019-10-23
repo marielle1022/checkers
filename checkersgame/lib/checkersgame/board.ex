@@ -12,9 +12,9 @@ defmodule Checkersgame.Board do
       # Question: how to define this so it can be updated at each move? Is it possible?
       game_board: create_board(),
       num_dark: 20,
-      num_light: 20
-      # all_dark_pieces: create_dark_pieces,
-      # all_light_pieces: create_light_pieces
+      num_light: 20,
+      all_dark_pieces: create_dark_pieces,
+      all_light_pieces: create_light_pieces
     }
   end
 
@@ -26,16 +26,15 @@ defmodule Checkersgame.Board do
     client_board = board.game_board
     current_dark = board.num_dark
     current_light = board.num_light
-
-    # list_dark = board.all_dark_pieces
-    # list_light = board.all_light_pieces
+    list_dark = board.all_dark_pieces
+    list_light = board.all_light_pieces
 
     %{
       current_board: client_board,
       num_dark: current_dark,
-      num_light: current_light
-      # dark_pieces: list_dark,
-      # light_pieces: list_light
+      num_light: current_light,
+      dark_pieces: list_dark,
+      light_pieces: list_light
     }
   end
 
@@ -62,51 +61,51 @@ defmodule Checkersgame.Board do
 
   def create_dark_pieces do
     %{
-      {0, 0} => Checkersgame.Piece.new(:dark, 0, 0),
-      {0, 2} => Checkersgame.Piece.new(:dark, 0, 2),
-      {0, 4} => Checkersgame.Piece.new(:dark, 0, 4),
-      {0, 6} => Checkersgame.Piece.new(:dark, 0, 6),
-      {0, 8} => Checkersgame.Piece.new(:dark, 0, 8),
-      {1, 1} => Checkersgame.Piece.new(:dark, 1, 1),
-      {1, 3} => Checkersgame.Piece.new(:dark, 1, 3),
-      {1, 5} => Checkersgame.Piece.new(:dark, 1, 5),
-      {1, 7} => Checkersgame.Piece.new(:dark, 1, 7),
-      {1, 9} => Checkersgame.Piece.new(:dark, 1, 9),
-      {2, 0} => Checkersgame.Piece.new(:dark, 2, 0),
-      {2, 2} => Checkersgame.Piece.new(:dark, 2, 2),
-      {2, 4} => Checkersgame.Piece.new(:dark, 2, 4),
-      {2, 6} => Checkersgame.Piece.new(:dark, 2, 6),
-      {2, 8} => Checkersgame.Piece.new(:dark, 2, 8),
-      {3, 1} => Checkersgame.Piece.new(:dark, 3, 1),
-      {3, 3} => Checkersgame.Piece.new(:dark, 3, 3),
-      {3, 5} => Checkersgame.Piece.new(:dark, 3, 5),
-      {3, 7} => Checkersgame.Piece.new(:dark, 3, 7),
-      {3, 9} => Checkersgame.Piece.new(:dark, 3, 9)
+      [0, 0] => Checkersgame.Piece.new(:dark, 0, 0),
+      [0, 2] => Checkersgame.Piece.new(:dark, 0, 2),
+      [0, 4] => Checkersgame.Piece.new(:dark, 0, 4),
+      [0, 6] => Checkersgame.Piece.new(:dark, 0, 6),
+      [0, 8] => Checkersgame.Piece.new(:dark, 0, 8),
+      [1, 1] => Checkersgame.Piece.new(:dark, 1, 1),
+      [1, 3] => Checkersgame.Piece.new(:dark, 1, 3),
+      [1, 5] => Checkersgame.Piece.new(:dark, 1, 5),
+      [1, 7] => Checkersgame.Piece.new(:dark, 1, 7),
+      [1, 9] => Checkersgame.Piece.new(:dark, 1, 9),
+      [2, 0] => Checkersgame.Piece.new(:dark, 2, 0),
+      [2, 2] => Checkersgame.Piece.new(:dark, 2, 2),
+      [2, 4] => Checkersgame.Piece.new(:dark, 2, 4),
+      [2, 6] => Checkersgame.Piece.new(:dark, 2, 6),
+      [2, 8] => Checkersgame.Piece.new(:dark, 2, 8),
+      [3, 1] => Checkersgame.Piece.new(:dark, 3, 1),
+      [3, 3] => Checkersgame.Piece.new(:dark, 3, 3),
+      [3, 5] => Checkersgame.Piece.new(:dark, 3, 5),
+      [3, 7] => Checkersgame.Piece.new(:dark, 3, 7),
+      [3, 9] => Checkersgame.Piece.new(:dark, 3, 9)
     }
   end
 
   def create_light_pieces do
     %{
-      {6, 0} => Checkersgame.Piece.new(:light, 6, 0),
-      {6, 2} => Checkersgame.Piece.new(:light, 6, 2),
-      {6, 4} => Checkersgame.Piece.new(:light, 6, 4),
-      {6, 6} => Checkersgame.Piece.new(:light, 6, 6),
-      {6, 8} => Checkersgame.Piece.new(:light, 6, 8),
-      {7, 1} => Checkersgame.Piece.new(:light, 7, 1),
-      {7, 3} => Checkersgame.Piece.new(:light, 7, 3),
-      {7, 5} => Checkersgame.Piece.new(:light, 7, 5),
-      {7, 7} => Checkersgame.Piece.new(:light, 7, 7),
-      {7, 9} => Checkersgame.Piece.new(:light, 7, 9),
-      {8, 0} => Checkersgame.Piece.new(:light, 8, 0),
-      {8, 2} => Checkersgame.Piece.new(:light, 8, 2),
-      {8, 4} => Checkersgame.Piece.new(:light, 8, 4),
-      {8, 6} => Checkersgame.Piece.new(:light, 8, 6),
-      {8, 8} => Checkersgame.Piece.new(:light, 8, 8),
-      {9, 1} => Checkersgame.Piece.new(:light, 9, 1),
-      {9, 3} => Checkersgame.Piece.new(:light, 9, 3),
-      {9, 5} => Checkersgame.Piece.new(:light, 9, 5),
-      {9, 7} => Checkersgame.Piece.new(:light, 9, 7),
-      {9, 9} => Checkersgame.Piece.new(:light, 9, 9)
+      [6, 0] => Checkersgame.Piece.new(:light, 6, 0),
+      [6, 2] => Checkersgame.Piece.new(:light, 6, 2),
+      [6, 4] => Checkersgame.Piece.new(:light, 6, 4),
+      [6, 6] => Checkersgame.Piece.new(:light, 6, 6),
+      [6, 8] => Checkersgame.Piece.new(:light, 6, 8),
+      [7, 1] => Checkersgame.Piece.new(:light, 7, 1),
+      [7, 3] => Checkersgame.Piece.new(:light, 7, 3),
+      [7, 5] => Checkersgame.Piece.new(:light, 7, 5),
+      [7, 7] => Checkersgame.Piece.new(:light, 7, 7),
+      [7, 9] => Checkersgame.Piece.new(:light, 7, 9),
+      [8, 0] => Checkersgame.Piece.new(:light, 8, 0),
+      [8, 2] => Checkersgame.Piece.new(:light, 8, 2),
+      [8, 4] => Checkersgame.Piece.new(:light, 8, 4),
+      [8, 6] => Checkersgame.Piece.new(:light, 8, 6),
+      [8, 8] => Checkersgame.Piece.new(:light, 8, 8),
+      [9, 1] => Checkersgame.Piece.new(:light, 9, 1),
+      [9, 3] => Checkersgame.Piece.new(:light, 9, 3),
+      [9, 5] => Checkersgame.Piece.new(:light, 9, 5),
+      [9, 7] => Checkersgame.Piece.new(:light, 9, 7),
+      [9, 9] => Checkersgame.Piece.new(:light, 9, 9)
     }
   end
 

@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    # DONE: This should be your server name.
+	# DONE: changed port from 4791 to 4569
+    server_name checkers.mgrathena.info;
+
+    location / {
+        proxy_pass http://localhost:4569;
+    }
+
+    location /socket {
+        proxy_pass http://localhost:4569;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";	 	 
+    }
+}

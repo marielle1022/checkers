@@ -52,6 +52,14 @@ defmodule CheckersgameWeb.GamesChannel do
     end
   end
 
+  def handle_in("click", %{"move" => ll}, socket) do
+    name = socket.assigns[:name]
+    game = BackupAgent.get(name)
+    BackupAgent.put(name, game)
+    broadcast!(socket, "update", %{"game" => Game.client_view(game)})
+    {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+  end
+
   # # Channels can be used in a request/response fashion
   # # by sending replies to requests from the client
   # def handle_in("ping", payload, socket) do

@@ -55,6 +55,7 @@ let socket = new Socket("/socket", {params: {token: window.userToken}})
 
 // Now that you are connected, you can join channels with a topic:
 
+socket.connect();
 
 /*
 ***

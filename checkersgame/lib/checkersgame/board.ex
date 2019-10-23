@@ -12,9 +12,9 @@ defmodule Checkersgame.Board do
       # Question: how to define this so it can be updated at each move? Is it possible?
       game_board: create_board(),
       num_dark: 20,
-      num_light: 20,
-      all_dark_pieces: create_dark_pieces,
-      all_light_pieces: create_light_pieces
+      num_light: 20
+      # all_dark_pieces: create_dark_pieces,
+      # all_light_pieces: create_light_pieces
     }
   end
 
@@ -22,19 +22,20 @@ defmodule Checkersgame.Board do
   # In game state - Have map w/ state
   # in board - store references to pieces
 
-  def client_view(board) do
+  def client_view(board, user) do
     client_board = board.game_board
     current_dark = board.num_dark
     current_light = board.num_light
-    list_dark = board.all_dark_pieces
-    list_light = board.all_light_pieces
+
+    # list_dark = board.all_dark_pieces
+    # list_light = board.all_light_pieces
 
     %{
       current_board: client_board,
       num_dark: current_dark,
-      num_light: current_light,
-      dark_pieces: list_dark,
-      light_pieces: list_light
+      num_light: current_light
+      # dark_pieces: list_dark,
+      # light_pieces: list_light
     }
   end
 

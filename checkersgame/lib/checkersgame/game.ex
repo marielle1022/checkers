@@ -22,7 +22,7 @@ defmodule Checkersgame.Game do
   # In game state - Have map w/ state
   # in board - store references to pieces
 
-  def client_view(game, user) do
+  def client_view(game, name) do
     client_board = game.game_board
     current_dark = game.num_dark
     current_light = game.num_light

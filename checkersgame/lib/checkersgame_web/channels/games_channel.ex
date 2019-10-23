@@ -2,14 +2,35 @@ defmodule CheckersgameWeb.GamesChannel do
   use CheckersgameWeb, :channel
 
   alias Checkersgame.GameServer
+  alias Checkersgame.Game
+  alias Checkersgame.BackupAgent
+
+  # Citation: for structure and other information in many of the functions,
+  # used hangman-2019-01 branch 2019-10-multiplayer-for-real
 
   intercept ["update"]
 
-  def join("games:" <> game, payload, socket) do
+  # def join("games:" <> game, payload, socket) do
+  #   if authorized?(payload) do
+  #     socket = assign(socket, :game, game)
+  #     view = GameServer.view(game, socket.assigns[:user])
+  #     {:ok, %{"join" => game, "game" => view}, socket}
+  #   else
+  #     {:error, %{reason: "unauthorized"}}
+  #   end
+  # end
+
+  def join("games:" <> name, payload, socket) do
     if authorized?(payload) do
-      socket = assign(socket, :game, game)
-      view = GameServer.view(game, socket.assigns[:user])
-      {:ok, %{"join" => game, "game" => view}, socket}
+      GameServer.start(name)
+      game = GameServer.peek(name)
+      BackupAgent.put(name, game)
+
+      socket =
+        socket
+        |> assign(:name, name)
+
+      {:ok, %{"join" => name, "game" => Game.client_view(game, name)}, socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
@@ -24,7 +45,7 @@ defmodule CheckersgameWeb.GamesChannel do
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (games:lobby).
   def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
+    broadcast(socket, "shout", payload)
     {:noreply, socket}
   end
 

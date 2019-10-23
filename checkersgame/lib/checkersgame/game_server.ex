@@ -9,7 +9,7 @@ defmodule Checkersgame.GameServer do
   # used hangman-2019-01 branch 2019-10-multiplayer-for-real
 
   def reg(name) do
-    {:via, Registry, {Hangman.GameReg, name}}
+    {:via, Registry, {Checkersgame.GameReg, name}}
   end
 
   def start(name) do
@@ -31,6 +31,10 @@ defmodule Checkersgame.GameServer do
 
   def view(game, user) do
     GenServer.call(__MODULE__, {:view, game, user})
+  end
+
+  def peek(name) do
+    GenServer.call(reg(name), {:peek, name})
   end
 
   def init(game) do

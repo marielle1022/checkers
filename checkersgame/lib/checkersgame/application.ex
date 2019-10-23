@@ -11,12 +11,12 @@ defmodule Checkersgame.Application do
       # Start the endpoint when the application starts
       CheckersgameWeb.Endpoint,
       # Starts a worker by calling: Checkersgame.Worker.start_link(arg)
-      Checkersgame.GameServer
+      Checkersgame.GameServer,
       # {Checkersgame.Worker, arg},
 
       # Structure referenced from hangman application.ex file
       Checkersgame.GameSup,
-      Checkersgame.BackupAgent,
+      Checkersgame.BackupAgent
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

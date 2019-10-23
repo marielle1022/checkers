@@ -7,6 +7,18 @@ defmodule Checkersgame.GameServer do
 
   # Citation: for structure and other information in many of the functions,
   # used hangman-2019-01 branch 2019-10-multiplayer-for-real
+
+  def start(name) do
+    spec = %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [name]},
+      restart: :permanent,
+      type: :worker
+    }
+
+    Checkersgame.GameSup.start_child(spec)
+  end
+
   ## Client Interface
   def start_link(_args) do
     GenServer.start_link(__MODULE__, %{}, name: __MODULE__)

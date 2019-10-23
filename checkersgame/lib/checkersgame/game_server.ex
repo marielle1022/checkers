@@ -2,7 +2,6 @@ defmodule Checkersgame.GameServer do
   use GenServer
 
   alias Checkersgame.Game
-  alias Checkersgame.Board
 
   # Need: client_view function; need to store state here, including board
 
@@ -16,7 +15,7 @@ defmodule Checkersgame.GameServer do
   end
 
   def handle_call({:view, game, user}, _from, state) do
-    gg = Map.get(state, game, Board.new())
-    {:reply, Board.client_view(gg, user), Map.put(state, game, gg)}
+    gg = Map.get(state, game, Game.new())
+    {:reply, Game.client_view(gg, user), Map.put(state, game, gg)}
   end
 end

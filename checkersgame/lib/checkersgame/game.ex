@@ -1,7 +1,7 @@
-defmodule Checkersgame.Board do
+defmodule Checkersgame.Game do
   # Note: Is this alias only usable within this module?
   # Question: Should Piece module be nexted within this?
-  alias Checkersgame.Board, as: Board
+  alias Checkersgame.Game, as: Game
   import Checkersgame.Piece
 
   # NB: use agents to implement states?!
@@ -22,12 +22,12 @@ defmodule Checkersgame.Board do
   # In game state - Have map w/ state
   # in board - store references to pieces
 
-  def client_view(board, user) do
-    client_board = board.game_board
-    current_dark = board.num_dark
-    current_light = board.num_light
-    list_dark = board.all_dark_pieces
-    list_light = board.all_light_pieces
+  def client_view(game, user) do
+    client_board = game.game_board
+    current_dark = game.num_dark
+    current_light = game.num_light
+    list_dark = game.all_dark_pieces
+    list_light = game.all_light_pieces
 
     %{
       current_board: client_board,
@@ -113,21 +113,22 @@ defmodule Checkersgame.Board do
   # y: y coordinate of board matrix
   # value: value to be put in board matrix at coordinates x, y
   # Note: works in iex if pass board as parameter, but doesn't save
-  def update_board(input_board, x, y, value) do
-    new_board = put_in(input_board.game_board[x][y], value)
-    input_board |> Map.put(:game_board, new_board)
+  # NB: set up so directly modifies state board? change name to game
+  def update_board(game, x, y, value) do
+    new_board = put_in(game.game_board[x][y], value)
+    game |> Map.put(:game_board, new_board)
   end
 
   # Get value of game board
-  def get_value(input_board, x, y) do
-    input_board.game_board[x][y]
+  def get_value(game, x, y) do
+    game.game_board[x][y]
   end
 
   # Update value of number of tokens
-  def update_score(input_board, team) do
+  def update_score(game, team) do
     case team do
-      :dark -> input_board |> Map.put(:num_dark, input_board[:num_dark] - 1)
-      :light -> input_board |> Map.put(:num_light, input_board[:num_light] - 1)
+      :dark -> game |> Map.put(:num_dark, game[:num_dark] - 1)
+      :light -> game |> Map.put(:num_light, game[:num_light] - 1)
     end
   end
 end

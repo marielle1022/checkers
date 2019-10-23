@@ -21,7 +21,8 @@ defmodule Checkersgame.GameServer do
 
   ## Client Interface
   def start_link(_args) do
-    GenServer.start_link(__MODULE__, %{}, name: __MODULE__)
+    game = Checkersgame.BackupAgent.get(name) || Checkersgame.Game.new()
+    GenServer.start_link(__MODULE__, game, name: reg(name))
   end
 
   def view(game, user) do

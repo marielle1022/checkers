@@ -119,28 +119,18 @@ per row.
     render() {
       console.log(this.board)
       return (
-          <div className="game-board">
+        <div className="game-board">
               {
               this.board.map((square, i) => (
                   square.type === 'red' ?
-                  <div key={i} className="game-square-red game-square" onClick = {() =>
-                      {this.handleClick(i)}}/> :
-                  <div key={i} className="game-square-black game-square" onClick = {() =>
-                      {this.handleClick(i)}}/>
+                  <div key={i} className="game-square-red game-square" /> :
+                  <div key={i} className="game-square-black game-square" />
 
               ))
               }
 
-          </div>
+        </div>
       );
   }
 }
 
-//TODO: Create function for Piece that sends piece clicks
-// See hangman/assets/js/hangman.jsx from Nat Tuck "Hangman" repository
-// for reference.
-function square(props) {
-    return (
-      <button className="game-square" onClick={props.onClick}/>
-    );
-  }

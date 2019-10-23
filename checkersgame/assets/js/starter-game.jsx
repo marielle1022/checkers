@@ -21,7 +21,7 @@ export default function game_init(root, channel) {
     *NB: need total numbers because there doesn't seem to be a simple way to seem
           if a map is empty
   */
-  
+
   //TODO: ANYTIME ANYTHING is done, send it to backupagent
 class GameBoard extends Component {
   constructor(props) {
@@ -117,7 +117,15 @@ per row.
   //TODO: add in div for pieces -- use amtrix map?
   // TODO: should onclick be in this.board or in this.state.board_matrix?
     render() {
-      console.log(this.board)
+      console.log(this.state.board_matrix)
+      for (let value of Object.values(this.state.board_matrix)) {
+        let x = value
+        console.log(x)
+        for (let value2 of Object.values(x)){
+          let y = value2
+          console.log(y)
+        }
+      }
       return (
         <div className="game-board">
               {
@@ -133,4 +141,3 @@ per row.
       );
   }
 }
-

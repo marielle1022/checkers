@@ -21,8 +21,9 @@ defmodule Checkersgame.Game do
   # Gen Server - Has observers, game state, etc (in map)
   # In game state - Have map w/ state
   # in board - store references to pieces
-
   def client_view(game, ll) do
+    # Need to call start_move_check_king(game, piece, x, y) there
+    # First need to take in click params, get piece matching params
     %{
       board_matrix: game.game_board,
       move: [],
@@ -140,6 +141,20 @@ defmodule Checkersgame.Game do
     case team do
       :dark -> game |> Map.put(:num_dark, game[:num_dark] - 1)
       :light -> game |> Map.put(:num_light, game[:num_light] - 1)
+    end
+  end
+
+  def update_piece_list(game, team, piece, new_x, new_y) do
+    case team do
+      :dark ->
+        game.all_dark_pieces
+        |> Map.put(game.all_dark_pieces, [new_x, new_y], game.all_dark_pieces.get(piece))
+        |> Map.delete(game.all_dark_pieces, piece)
+
+      :light ->
+        game.all_light_pieces
+        |> Map.put(game.all_light_pieces, [new_x, new_y], game.all_light_pieces.get(piece))
+        |> Map.delete(game.all_light_pieces, piece)
     end
   end
 end

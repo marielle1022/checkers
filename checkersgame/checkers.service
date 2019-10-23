@@ -1,0 +1,19 @@
+[Unit]
+Description=Checkers
+
+#DONE: changed port 4791 to 4569
+#DONE: changed user, group
+#Done: changed filepath in WorkingDirectory, ExecStart
+[Service]
+Type=simple
+User=checkers
+Group=checkers
+Restart=on-failure
+Environment=MIX_ENV=prod "PORT=4569"
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/checkers/checkers/checkersgame
+ExecStart=/bin/bash /home/checkers/checkers/checkersgame/start.sh
+
+[Install]
+WantedBy=multi-user.target

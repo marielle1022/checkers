@@ -42,6 +42,17 @@ defmodule CheckersgameWeb.GamesChannel do
     {:reply, {:ok, payload}, socket}
   end
 
+
+  # Structure of function referenced from hangman 2019-10 multiplayer
+  def handle_in("click", %{"move" => ll}, socket) do
+    name = socket.assigns[:name]
+    
+    #TODO change server "guess()" call to match checkers
+    game = GameServer.guess(name, ll)
+    broadcast!(socket, "update", %{ "game" => Game.client_view(game) })
+    {:reply, {:ok, %{ "game" => Game.client_view(game)}}, socket}
+  end
+
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (games:lobby).
   def handle_in("shout", payload, socket) do

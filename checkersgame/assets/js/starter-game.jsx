@@ -85,11 +85,11 @@ per row.
       return board;
   }
 
-  //TODO: This is where we'll insert the channel push
-    handleClick(i) {
-        this.channel.push("click", {click: i})
+
+  handleClick(ev) {
+        this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
-    }
+  }
 
     render() {
       console.log(this.state.board)

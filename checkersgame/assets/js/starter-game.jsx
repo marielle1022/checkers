@@ -112,6 +112,8 @@ per row.
         .receive("ok", this.got_view.bind(this));
   }
 
+  //TODO: add in div for pieces -- use amtrix map?
+  // TODO: should onclick be in this.board or in this.state.board_matrix?
     render() {
       console.log(this.board)
       return (

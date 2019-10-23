@@ -13,15 +13,15 @@ defmodule Checkersgame.Game do
       game_board: create_board(),
       num_dark: 20,
       num_light: 20,
-      all_dark_pieces: create_dark_pieces,
-      all_light_pieces: create_light_pieces
+      all_dark_pieces: create_dark_pieces(),
+      all_light_pieces: create_light_pieces()
     }
   end
 
   # Gen Server - Has observers, game state, etc (in map)
   # In game state - Have map w/ state
   # in board - store references to pieces
-  def client_view(game, ll) do
+  def client_view(game) do
     # Need to call start_move_check_king(game, piece, x, y) there
     # First need to take in click params, get piece matching params
     %{
@@ -57,7 +57,7 @@ defmodule Checkersgame.Game do
     # Light squares (which won't be used) will be represented with -1
     # Dark pieces are represented with value 1 and start at the top
     # Light pieces are represented with value 2 and start at the bottom
-    starting_board = %{
+    %{
       0 => %{0 => 1, 1 => -1, 2 => 1, 3 => -1, 4 => 1, 5 => -1, 6 => 1, 7 => -1, 8 => 1, 9 => -1},
       1 => %{0 => -1, 1 => 1, 2 => -1, 3 => 1, 4 => -1, 5 => 1, 6 => -1, 7 => 1, 8 => -1, 9 => 1},
       2 => %{0 => 1, 1 => -1, 2 => 1, 3 => -1, 4 => 1, 5 => -1, 6 => 1, 7 => -1, 8 => 1, 9 => -1},
@@ -151,13 +151,22 @@ defmodule Checkersgame.Game do
     case team do
       :dark ->
         game.all_dark_pieces
-        |> Map.put(game.all_dark_pieces, [new_x, new_y], game.all_dark_pieces.get(piece))
-        |> Map.delete(game.all_dark_pieces, piece)
+        |> Map.put([new_x, new_y], game.all_dark_pieces.get(piece))
+        |> Map.delete(piece)
+
+      # Question: Does |> mean Map output from put() is input for first param in Map.delete?
+      # With this, saying function Map.delete/3 is undefined/private
+      # |> Map.delete(game.all_dark_pieces, piece)
+      # Question: same issue with above Map.put
 
       :light ->
         game.all_light_pieces
-        |> Map.put(game.all_light_pieces, [new_x, new_y], game.all_light_pieces.get(piece))
-        |> Map.delete(game.all_light_pieces, piece)
+        |> Map.put([new_x, new_y], game.all_light_pieces.get(piece))
+        |> Map.delete(piece)
+
+        # Question: Does |> mean Map output from put() is input for first param in Map.delete?
+        # With this, saying function Map.delete/3 is undefined/private
+        # |> Map.delete(game.all_light_pieces, piece)
     end
   end
 end

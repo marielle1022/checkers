@@ -27,12 +27,14 @@ defmodule Checkersgame.Piece do
 
       case {tempRank, tempTeam, x} do
         {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
-          # piece.rank = :king
-          "Dark"
+          "make king"
+
+        #  make_king(game, piece)
 
         {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
-          # piece.rank = :king
-          "Light"
+          "make king"
+
+        #  make_king(game, piece)
 
         _ ->
           "No change to rank"
@@ -45,6 +47,10 @@ defmodule Checkersgame.Piece do
       end
     end
   end
+
+  # def make_king(_game, piece) do
+  #   Map.put(piece, rank, :king)
+  # end
 
   def check_valid(game, piece, x, y) do
     case {piece.team, Checkersgame.Game.get_value(game, x, y)} do

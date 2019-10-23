@@ -6,12 +6,33 @@ export default function game_init(root, channel) {
   ReactDOM.render(<GameBoard channel={channel}/>, root);
 }
 
+/* In state...
+    board_matrix = coordinates of all squares and their values
+    *NB: Should we store current piece? Or just access it from click list?
+    move = up to 2 valid clicks
+    list_dark = list of all pieces, with
+        (keys = board coordinates) : (values = map including rank, team, x, y)
+    list_light = list of all pieces, with
+        (keys = board coordinates) : (values = map including rank, team, x, y)
+    *NB: should both lists of pieces be here? Or just the piece being modified?
+    Can we access piece being modified without having lists here?
+    total_dark = number of dark dark pieces
+    total_light = number of light pieces
+    *NB: need total numbers because there doesn't seem to be a simple way to seem
+          if a map is empty
+  */
 class GameBoard extends Component {
   constructor(props) {
     super(props)
     this.channel = props.channel;
+    this.board = this.createSquares();
     this.state = {
-        board: this.createSquares() 
+      board_matrix: {},
+      move: [],
+      list_dark: {},
+      list_light: {},
+      total_dark: 20,
+      total_light: 20
     };
 
     this.channel
@@ -60,7 +81,7 @@ per row.
                       type: "black"
                   })
               }
-          
+
           //Odd rows
           } else {
               if (i % 2 === 0) {
@@ -77,8 +98,8 @@ per row.
                       col: col,
                       type: "red"
                   })
-              } 
-          } 
+              }
+          }
           //Increment row
           col++;
       }
@@ -92,17 +113,17 @@ per row.
   }
 
     render() {
-      console.log(this.state.board)
+      console.log(this.board)
       return (
           <div className="game-board">
               {
-              this.state.board.map((square, i) => (
+              this.board.map((square, i) => (
                   square.type === 'red' ?
-                  <div key={i} className="game-square-red game-square" onClick = {() => 
+                  <div key={i} className="game-square-red game-square" onClick = {() =>
                       {this.handleClick(i)}}/> :
-                  <div key={i} className="game-square-black game-square" onClick = {() => 
+                  <div key={i} className="game-square-black game-square" onClick = {() =>
                       {this.handleClick(i)}}/>
-                  
+
               ))
               }
 
@@ -112,7 +133,7 @@ per row.
 }
 
 //TODO: Create function for Piece that sends piece clicks
-// See hangman/assets/js/hangman.jsx from Nat Tuck "Hangman" repository 
+// See hangman/assets/js/hangman.jsx from Nat Tuck "Hangman" repository
 // for reference.
 function square(props) {
     return (

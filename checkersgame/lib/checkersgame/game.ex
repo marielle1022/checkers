@@ -23,6 +23,14 @@ defmodule Checkersgame.Game do
   # in board - store references to pieces
 
   def client_view(game, ll) do
+    %{
+      board_matrix: game.game_board,
+      move: [],
+      list_dark: game.all_dark_pieces,
+      list_light: game.all_light_pieces,
+      total_dark: game.num_dark,
+      total_light: game.num_light
+    }
   end
 
   # def client_view(game, name) do

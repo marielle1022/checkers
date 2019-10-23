@@ -26,7 +26,6 @@ $(() => {
   let root = document.getElementById('root');
   if (root) {
     let channel = socket.channel("games:" + window.gameName, {});
-    hangman_init(root, channel);
+    game_init(root, channel);
   }
 });
-

@@ -144,6 +144,9 @@ defmodule Checkersgame.Game do
     end
   end
 
+  # After a change has been made to a piece's location,
+  # removes the key:value pair with the old location
+  # and adds the key:value pair for the new one
   def update_piece_list(game, team, piece, new_x, new_y) do
     case team do
       :dark ->

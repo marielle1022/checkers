@@ -41,6 +41,8 @@ class GameBoard extends Component {
         .join()
         .receive("ok", this.got_view.bind(this))
         .receive("error", resp => {console.log("Unable to join", resp); });
+    
+        console.log("after join")
     this.channel.on("update", this.got_view.bind(this));
   }
 
@@ -49,11 +51,6 @@ class GameBoard extends Component {
     this.setState(view.game);
   }
 
-/*
-TODO: The code below can be reformatted. It's duplicated in multiple
-spots and I'm sure there's a simple way to put it into a function and alternate
-per row.
-*/
   createSquares() {
       let board = [];
       let square = {};
@@ -109,28 +106,31 @@ per row.
   }
 
 
-  handleClick(ev) {
+    handleClick(ev) {
         this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
-  }
+    }
 
   //TODO: add in div for pieces -- use amtrix map?
   // TODO: should onclick be in this.board or in this.state.board_matrix?
     render() {
-      console.log(this.board)
-      return (
-        <div className="game-board">
-              {
-              this.board.map((square, i) => (
-                  square.type === 'red' ?
-                  <div key={i} className="game-square-red game-square" /> :
-                  <div key={i} className="game-square-black game-square" />
+        console.log(this.board)
+        a = this.state.board_matrix.get(1)
+        b = a.get(1)
+        console.log("VALUE " + a)
+        return (
+            <div className="game-board">
+                {
+                this.board.map((square, i) => (
 
-              ))
-              }
+                    square.type === 'red' ?
+                    <div key={i} className="game-square-red game-square" /> :
+                    <div key={i} className="game-square-black game-square" />
+                ))
+                }
 
-        </div>
-      );
-  }
+            </div>
+        );
+    }
 }
 

@@ -25,4 +25,4 @@ mix release
 
 echo "Starting app..."
 
-_build/prod/rel/checkers/bin/checkers/checkersgame start
+_build/prod/rel/checkersgame/bin/checkersgame start

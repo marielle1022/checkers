@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 export default function game_init(root, channel) {
+    console.log("sindei" );
+    console.log(channel)
   ReactDOM.render(<GameBoard channel={channel}/>, root);
 }
 
@@ -53,7 +55,7 @@ class GameBoard extends Component {
 
     handleClick(ev) {
         console.log("Clicked!")
-        console.log(ev.target.value)
+        console.log(ev.target)
         this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
     }
@@ -217,7 +219,6 @@ class GameBoard extends Component {
                             gridRow: piece.row + 1,
                             gridColumn: piece.col + 1
                         }}
-
                         className={piece.team}
                         onClick={this.handleClick}                        
                         >

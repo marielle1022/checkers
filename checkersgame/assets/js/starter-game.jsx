@@ -27,7 +27,6 @@ class GameBoard extends Component {
   constructor(props) {
     super(props)
     this.channel = props.channel;
-    this.board = this.createSquares();
     this.state = {
       board_matrix: {},
       move: [],
@@ -51,59 +50,59 @@ class GameBoard extends Component {
     this.setState(view.game);
   }
 
-  createSquares() {
-      let board = [];
-      let square = {};
-      let row = 1;
-      let col = 1;
+//   createSquares() {
+//       let board = [];
+//       let square = {};
+//       let row = 1;
+//       let col = 1;
 
-      //Alternate colors on the board
-      for (let i = 0; i < 100; i++) {
-          if (col > 10) {
-              col = 1;
-              row++;
-          }
-          //Even rows
-          if (row % 2 === 0) {
-              if (i % 2 === 0) {
-                  board.push({
-                      square,
-                      row: row,
-                      col: col,
-                      type: "red"
-                  })
-              } else {
-                  board.push({
-                      square,
-                      row: row,
-                      col: col,
-                      type: "black"
-                  })
-              }
+//       //Alternate colors on the board
+//       for (let i = 0; i < 100; i++) {
+//           if (col > 10) {
+//               col = 1;
+//               row++;
+//           }
+//           //Even rows
+//           if (row % 2 === 0) {
+//               if (i % 2 === 0) {
+//                   board.push({
+//                       square,
+//                       row: row,
+//                       col: col,
+//                       type: "red"
+//                   })
+//               } else {
+//                   board.push({
+//                       square,
+//                       row: row,
+//                       col: col,
+//                       type: "black"
+//                   })
+//               }
 
-          //Odd rows
-          } else {
-              if (i % 2 === 0) {
-                  board.push({
-                      square,
-                      row: row,
-                      col: col,
-                      type: "black"
-                  })
-              } else {
-                  board.push({
-                      square,
-                      row: row,
-                      col: col,
-                      type: "red"
-                  })
-              }
-          }
-          //Increment row
-          col++;
-      }
-      return board;
-  }
+//           //Odd rows
+//           } else {
+//               if (i % 2 === 0) {
+//                   board.push({
+//                       square,
+//                       row: row,
+//                       col: col,
+//                       type: "black"
+//                   })
+//               } else {
+//                   board.push({
+//                       square,
+//                       row: row,
+//                       col: col,
+//                       type: "red"
+//                   })
+//               }
+//           }
+//           //Increment row
+//           col++;
+//       }
+//       return board;
+//   }
 
 
     handleClick(ev) {
@@ -111,38 +110,68 @@ class GameBoard extends Component {
         .receive("ok", this.got_view.bind(this));
     }
 
+    // Converts the map from elixir to something that's
+    // readable in react
+    createBoardMatrix() {
+
+        let board_matrix = [];
+        let row = 1;
+        let col = 1;
+        let tile = {};
+        for (let i of Object.values(this.state.board_matrix)) {
+            let value_1 = i
+            for (let j of Object.values(value_1)){
+                let val = j
+                // If a piece cannot be placed on the tile
+                if (val < 0) {
+                    board_matrix.push(
+                        {
+                            tile,
+                            row: row,
+                            col: col,
+                            value: val,
+                            type: "black"
+                        }
+                    )
+                }
+                // If the tile is valid and/or occupied
+                else {
+                    board_matrix.push(
+                        {
+                            tile,
+                            row: row,
+                            col: col,
+                            value: val,
+                            type: "red"
+                        }
+                    ) 
+                }
+                if (col > 9) {
+                    col = 0;
+                }
+                col++
+            }
+            row++;
+        }
+        console.log(board_matrix)
+        return board_matrix;
+    }
+
   //TODO: add in div for pieces -- use amtrix map?
   // TODO: should onclick be in this.board or in this.state.board_matrix?
     render() {
-<<<<<<< HEAD
-      console.log(this.state.board_matrix)
-      for (let value of Object.values(this.state.board_matrix)) {
-        let x = value
-        console.log(x)
-        for (let value2 of Object.values(x)){
-          let y = value2
-          console.log(y)
-        }
-      }
-      return (
-        <div className="game-board">
-              {
-              this.board.map((square, i) => (
-                  square.type === 'red' ?
-                  <div key={i} className="game-square-red game-square" /> :
-                  <div key={i} className="game-square-black game-square" />
-=======
-        console.log(this.board)
-        a = this.state.board_matrix.get(1)
-        b = a.get(1)
-        console.log("VALUE " + a)
+
+
+
+
+
+        // Create new board for each render
+        let board = this.createBoardMatrix();
         return (
             <div className="game-board">
                 {
-                this.board.map((square, i) => (
->>>>>>> 3dafad7e5c5374a111b84d6c1fa531f8b6a5c5cd
-
-                    square.type === 'red' ?
+                board.map((tile, i) => (
+                    tile.type === 'red' ?
                     <div key={i} className="game-square-red game-square" /> :
                     <div key={i} className="game-square-black game-square" />
                 ))
@@ -152,3 +181,4 @@ class GameBoard extends Component {
         );
     }
 }
+

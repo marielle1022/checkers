@@ -171,8 +171,8 @@ class GameBoard extends Component {
                     className="game-square-red game-square" 
                     style={
                         {
-                        gridRow: tile.row,
-                        gridColumn: tile.col
+                        gridRow: tile.row + 1,
+                        gridColumn: tile.col + 1
                       }
                     }
                     /> :
@@ -181,8 +181,8 @@ class GameBoard extends Component {
                         className="game-square-black game-square" 
                         style={
                             {
-                            gridRow: tile.row,
-                            gridColumn: tile.col
+                            gridRow: tile.row + 1,
+                            gridColumn: tile.col + 1
                         }
                     }
                     />
@@ -195,8 +195,8 @@ class GameBoard extends Component {
                     <div
                         key={i}
                         style={{
-                            gridRow: piece.row,
-                            gridColumn: piece.col,
+                            gridRow: piece.row + 1,
+                            gridColumn: piece.col + 1
                         }}
                         className={piece.team}>
                     </div>
@@ -204,9 +204,20 @@ class GameBoard extends Component {
                 })
                 }
 
-
-
-
+                {
+                light_players.map((piece, i) => {
+                    return (
+                    <div
+                        key={i}
+                        style={{
+                            gridRow: piece.row + 1,
+                            gridColumn: piece.col + 1
+                        }}
+                        className={piece.team}>
+                    </div>
+                    )
+                })
+                }
 
             </div>
         );

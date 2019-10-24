@@ -50,73 +50,67 @@ class GameBoard extends Component {
     this.setState(view.game);
   }
 
-//   createSquares() {
-//       let board = [];
-//       let square = {};
-//       let row = 1;
-//       let col = 1;
-
-//       //Alternate colors on the board
-//       for (let i = 0; i < 100; i++) {
-//           if (col > 10) {
-//               col = 1;
-//               row++;
-//           }
-//           //Even rows
-//           if (row % 2 === 0) {
-//               if (i % 2 === 0) {
-//                   board.push({
-//                       square,
-//                       row: row,
-//                       col: col,
-//                       type: "red"
-//                   })
-//               } else {
-//                   board.push({
-//                       square,
-//                       row: row,
-//                       col: col,
-//                       type: "black"
-//                   })
-//               }
-
-//           //Odd rows
-//           } else {
-//               if (i % 2 === 0) {
-//                   board.push({
-//                       square,
-//                       row: row,
-//                       col: col,
-//                       type: "black"
-//                   })
-//               } else {
-//                   board.push({
-//                       square,
-//                       row: row,
-//                       col: col,
-//                       type: "red"
-//                   })
-//               }
-//           }
-//           //Increment row
-//           col++;
-//       }
-//       return board;
-//   }
-
 
     handleClick(ev) {
         this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
     }
 
-    // Converts the map from elixir to something that's
-    // readable in react
+    createDarkPieces() {
+        let dark_pieces = [];
+        for (let i of Object.values(this.state.list_dark)) {
+            // Store the piece from elixir
+            // in an array
+            let piece = [];
+            let value_1 = i
+            for (let j of Object.values(value_1)){
+                let val = j
+                piece.push(val)
+            }
+            // Push that piece into the dark_pieces array
+            dark_pieces.push(
+                {
+                    row: piece[0],
+                    col: piece[1],
+                    rank: piece[2],
+                    team: piece[3]
+                }
+            )
+        }
+        return dark_pieces;
+    }
+
+    createLightPieces() {
+        let light_pieces = [];
+        for (let i of Object.values(this.state.list_light)) {
+            // Store the piece from elixir
+            // in an array
+            let piece = [];
+            let value_1 = i
+            for (let j of Object.values(value_1)){
+                let val = j
+                piece.push(val)
+            }
+            // Push that piece into the dark_pieces array
+            light_pieces.push(
+                {
+                    row: piece[0],
+                    col: piece[1],
+                    rank: piece[2],
+                    team: piece[3]
+                }
+            )
+        }
+        return light_pieces;
+    }
+
+    // Converts the map from elixir to format that's easily
+    // readable by react
     createBoardMatrix() {
 
         let board_matrix = [];
-        let row = 1;
-        let col = 1;
+        let row = 0;
+        let col = 0;
         let tile = {};
         for (let i of Object.values(this.state.board_matrix)) {
             let value_1 = i
@@ -146,36 +140,73 @@ class GameBoard extends Component {
                         }
                     ) 
                 }
-                if (col > 9) {
-                    col = 0;
+                if (col > 8) {
+                    col = -1;
                 }
                 col++
             }
             row++;
         }
-        console.log(board_matrix)
         return board_matrix;
     }
 
-  //TODO: add in div for pieces -- use amtrix map?
-  // TODO: should onclick be in this.board or in this.state.board_matrix?
     render() {
 
-
-
-
-
-        // Create new board for each render
+        // Update pieces + board
         let board = this.createBoardMatrix();
+        let dark_players = this.createDarkPieces();
+        let light_players = this.createLightPieces();
+        console.log(dark_players)
+        console.log(light_players)
+        console.log(board)
+
         return (
             <div className="game-board">
+
                 {
                 board.map((tile, i) => (
                     tile.type === 'red' ?
-                    <div key={i} className="game-square-red game-square" /> :
-                    <div key={i} className="game-square-black game-square" />
+                    <div 
+                    key={i} 
+                    className="game-square-red game-square" 
+                    style={
+                        {
+                        gridRow: tile.row,
+                        gridColumn: tile.col
+                      }
+                    }
+                    /> :
+                    <div 
+                        key={i} 
+                        className="game-square-black game-square" 
+                        style={
+                            {
+                            gridRow: tile.row,
+                            gridColumn: tile.col
+                        }
+                    }
+                    />
                 ))
                 }
+
+                {
+                dark_players.map((piece, i) => {
+                    return (
+                    <div
+                        key={i}
+                        style={{
+                            gridRow: piece.row,
+                            gridColumn: piece.col,
+                        }}
+                        className={piece.team}>
+                    </div>
+                    )
+                })
+                }
+
+
+
+
 
             </div>
         );

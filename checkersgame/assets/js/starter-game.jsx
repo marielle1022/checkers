@@ -52,6 +52,8 @@ class GameBoard extends Component {
 
 
     handleClick(ev) {
+        console.log("Clicked!")
+        console.log(ev.target.value)
         this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
     }
@@ -167,13 +169,13 @@ class GameBoard extends Component {
                 board.map((tile, i) => (
                     tile.type === 'red' ?
                     <div 
-                    key={i} 
-                    className="game-square-red game-square" 
-                    style={
-                        {
-                        gridRow: tile.row + 1,
-                        gridColumn: tile.col + 1
-                      }
+                        key={i} 
+                        className="game-square-red game-square" 
+                        style={
+                            {
+                            gridRow: tile.row + 1,
+                            gridColumn: tile.col + 1
+                        }
                     }
                     /> :
                     <div 
@@ -198,7 +200,9 @@ class GameBoard extends Component {
                             gridRow: piece.row + 1,
                             gridColumn: piece.col + 1
                         }}
-                        className={piece.team}>
+                        className={piece.team}
+                        onClick={this.handleClick}
+                        >
                     </div>
                     )
                 })
@@ -213,7 +217,10 @@ class GameBoard extends Component {
                             gridRow: piece.row + 1,
                             gridColumn: piece.col + 1
                         }}
-                        className={piece.team}>
+
+                        className={piece.team}
+                        onClick={this.handleClick}                        
+                        >
                     </div>
                     )
                 })

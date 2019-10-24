@@ -10,7 +10,7 @@ echo "Starting app..."
 #_build/prod/rel/checkers/bin/checkers/checkersgame start
 
 # Foreground for testing and for systemd
-_build/prod/rel/checkers/bin/checkers/checkersgame start
+_build/prod/rel/checkersgame/bin/checkersgame start
 
 # TODO: Add a systemd service file
 #       to start your app on system boot.

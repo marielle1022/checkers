@@ -32,3 +32,6 @@ npm-debug.log
 # we ignore priv/static. You may want to comment
 # this depending on your deployment strategy.
 /priv/static/
+
+# Secrets -- see http://ccs.neu.edu/home/ntuck/courses/2019/09/cs5610/notes/12-resources/notes.html
+prod-env.sh

@@ -29,7 +29,8 @@ defmodule Checkersgame.Game do
     %{
       board_matrix: game.game_board,
       move: [],
-      check_move: start_move(game, move[0], move[1], move[2], move[3], move[4]),
+      check_move:
+        start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
       list_dark: game.all_dark_pieces,
       list_light: game.all_light_pieces,
       total_dark: game.num_dark,

@@ -23,7 +23,7 @@ export default function game_init(root, channel) {
     *NB: need total numbers because there doesn't seem to be a simple way to seem
           if a map is empty
 
-    Referenced https://upmostly.com/tutorials/react-onclick-event-handling-with-examples  
+    Referenced https://upmostly.com/tutorials/react-onclick-event-handling-with-examples
     to help structure the onclick functions within the dark and light tiles (and possibly
         the board_matrix. This was written before that was completed)
   */
@@ -47,7 +47,7 @@ class GameBoard extends Component {
         .join()
         .receive("ok", this.got_view.bind(this))
         .receive("error", resp => {console.log("Unable to join", resp); });
-    
+
         console.log("after join")
         this.channel.on("update", this.got_view.bind(this));
     }
@@ -58,7 +58,6 @@ class GameBoard extends Component {
     }
 
     handleClick = (piece) => {
-        this.checkMoveState;
         let move = this.state.move;
         if (move.length == 0) {
             let val1 = piece.row;
@@ -78,7 +77,6 @@ class GameBoard extends Component {
 
 
     tileClick = (tile) => {
-        this.checkMoveState;
         let move = this.state.move;
         console.log("tile clicked")
         if (move.length == 3 && tile.value == 0) {
@@ -92,15 +90,6 @@ class GameBoard extends Component {
             console.log(this.state.move)
             this.channel.push("click", { move: move })
             .receive("ok", this.got_view.bind(this));
-        }
-    }
-
-    checkMoveState() {
-        if (this.state > 5) {
-            this.setState({
-                move: []
-            })
-            console.log("move state adjusted")
         }
     }
 
@@ -188,7 +177,7 @@ class GameBoard extends Component {
                             value: val,
                             type: "red"
                         }
-                    ) 
+                    )
                 }
                 if (col > 8) {
                     col = -1;
@@ -213,27 +202,27 @@ class GameBoard extends Component {
                 {
                 board.map((tile, i) => (
                     tile.type === 'red' ?
-                    <div 
-                        key={i} 
-                        className="game-square-red game-square" 
+                    <div
+                        key={i}
+                        className="game-square-red game-square"
                         style={
                             {
                             gridRow: tile.row + 1,
                             gridColumn: tile.col + 1
                         }
                         }
-                        onClick = {() => {this.tileClick(tile)}}                    
+                        onClick = {() => {this.tileClick(tile)}}
                     /> :
-                    <div 
-                        key={i} 
-                        className="game-square-black game-square" 
+                    <div
+                        key={i}
+                        className="game-square-black game-square"
                         style={
                             {
                             gridRow: tile.row + 1,
                             gridColumn: tile.col + 1
                             }
                         }
-                    
+
                     />
                 ))
                 }
@@ -266,7 +255,7 @@ class GameBoard extends Component {
                         }}
                         className={piece.team}
 
-                        onClick = {() => {this.handleClick(piece)}}                    
+                        onClick = {() => {this.handleClick(piece)}}
                         >
                     </div>
                     )
@@ -277,4 +266,3 @@ class GameBoard extends Component {
         );
     }
 }
-

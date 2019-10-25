@@ -58,6 +58,7 @@ class GameBoard extends Component {
     }
 
     handleClick = (piece) => {
+        this.checkMoveState;
         let move = this.state.move;
         if (move.length == 0) {
             let val1 = piece.row;
@@ -77,9 +78,10 @@ class GameBoard extends Component {
 
 
     tileClick = (tile) => {
+        this.checkMoveState;
         let move = this.state.move;
         console.log("tile clicked")
-        if (move.length == 3) {
+        if (move.length == 3 && tile.value == 0) {
             let val1 = tile.row;
             let val2 = tile.col;
             move.push(val1);
@@ -87,22 +89,19 @@ class GameBoard extends Component {
             this.setState({
                 move: move
             })
+            console.log(this.state.move)
             this.channel.push("click", { move: move })
             .receive("ok", this.got_view.bind(this));
         }
-        console.log("in tileclick ")
-        move = []
-        this.setState({
-            move: move
-        })
-        console.log(this.state.move)
     }
 
-    handleClick() {
-        console.log("Clicked!")
-
-        this.channel.push("click", { move: ev })
-        .receive("ok", this.got_view.bind(this));
+    checkMoveState() {
+        if (this.state > 5) {
+            this.setState({
+                move: []
+            })
+            console.log("move state adjusted")
+        }
     }
 
     createDarkPieces() {

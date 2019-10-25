@@ -26,7 +26,6 @@ $(() => {
   let root = document.getElementById('root');
   if (root) {
     let channel = socket.channel("games:" + window.gameName, {});
-    console.log(channel)
     game_init(root, channel);
   }
 });

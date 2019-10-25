@@ -82,13 +82,15 @@ class GameBoard extends Component {
         if (move.length == 3 && tile.value == 0) {
             let val1 = tile.row;
             let val2 = tile.col;
+            //destination x and y
             move.push(val1);
             move.push(val2)
             this.setState({
                 move: move
             })
             console.log(this.state.move)
-            this.channel.push("click", { move: move })
+            this.channel.push("click", { x: move[0], y: move[1],
+             team: move[2], destX: move[3], destY: move[4] })
             .receive("ok", this.got_view.bind(this));
         }
     }

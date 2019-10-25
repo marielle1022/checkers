@@ -29,6 +29,7 @@ defmodule Checkersgame.Game do
     %{
       board_matrix: game.game_board,
       move: [],
+      check_move: start_move(game, move[0], move[1], move[2], move[3], move[4]),
       list_dark: game.all_dark_pieces,
       list_light: game.all_light_pieces,
       total_dark: game.num_dark,
@@ -51,6 +52,18 @@ defmodule Checkersgame.Game do
   #     light_pieces: list_light
   #   }
   # end
+
+  def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
+    case team do
+      1 ->
+        piece = game.list_dark.fetch([starting_x, starting_y])
+        piece.start_move_check_king(game, piece, ending_x, ending_y)
+
+      2 ->
+        piece = game.list_light.fetch([starting_x, starting_y])
+        piece.start_move_check_king(game, piece, ending_x, ending_y)
+    end
+  end
 
   # To create nested map, used
   # https://blog.danielberkompas.com/2016/04/23/multidimensional-arrays-in-elixir/

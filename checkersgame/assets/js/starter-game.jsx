@@ -58,8 +58,6 @@ class GameBoard extends Component {
     }
 
     handleClick = (piece) => {
-        this.checkMoveState;
-        let move = this.state.move;
         if (move.length == 0) {
             let val1 = piece.row;
             let val2 = piece.col;
@@ -78,7 +76,6 @@ class GameBoard extends Component {
 
 
     tileClick = (tile) => {
-        this.checkMoveState;
         let move = this.state.move;
         console.log("tile clicked")
         if (move.length == 3 && tile.value == 0) {
@@ -92,15 +89,6 @@ class GameBoard extends Component {
             console.log(this.state.move)
             this.channel.push("click", { move: move })
             .receive("ok", this.got_view.bind(this));
-        }
-    }
-
-    checkMoveState() {
-        if (this.state > 5) {
-            this.setState({
-                move: []
-            })
-            console.log("move state adjusted")
         }
     }
 

@@ -12,13 +12,13 @@ defmodule Checkersgame.Game do
     %{
       # set up matrix
       # Question: how to define this so it can be updated at each move? Is it possible?
-      game_board: create_board(),
-      num_dark: 20,
-      num_light: 20,
-      move: [0, 0, 0, 0, 0],
+      board_matrix: create_board(),
+      move: [],
       check_move: false,
-      all_dark_pieces: create_dark_pieces(),
-      all_light_pieces: create_light_pieces()
+      list_dark: create_dark_pieces(),
+      list_light: create_light_pieces(),
+      total_dark: 20,
+      total_light: 20
     }
   end
 
@@ -29,29 +29,29 @@ defmodule Checkersgame.Game do
     # Need to call start_move_check_king(game, piece, x, y) there
     # First need to take in click params, get piece matching params
     %{
-      board_matrix: game.game_board,
+      board_matrix: game.board_matrix,
       move: [0, 0, 0, 0, 0],
-      # check_move:
-      #   start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
-      check_move: start_move(game, move[1], 2, 3, 4, 5),
-      list_dark: game.all_dark_pieces,
-      list_light: game.all_light_pieces,
-      total_dark: game.num_dark,
-      total_light: game.num_light
+      check_move:
+        start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
+      # check_move: start_move(game, move[1], move[2], move[3], move[4], move[5]),
+      list_dark: game.list_dark,
+      list_light: game.list_light,
+      total_dark: game.total_dark,
+      total_light: game.total_light
     }
   end
 
   # def client_view(game, name) do
-  #   client_board = game.game_board
-  #   current_dark = game.num_dark
-  #   current_light = game.num_light
-  #   list_dark = game.all_dark_pieces
-  #   list_light = game.all_light_pieces
+  #   client_board = game.board_matrix
+  #   current_dark = game.total_dark
+  #   current_light = game.total_light
+  #   list_dark = game.list_dark
+  #   list_light = game.list_light
   #
   #   %{
   #     current_board: client_board,
-  #     num_dark: current_dark,
-  #     num_light: current_light,
+  #     total_dark: current_dark,
+  #     total_light: current_light,
   #     dark_pieces: list_dark,
   #     light_pieces: list_light
   #   }
@@ -147,20 +147,20 @@ defmodule Checkersgame.Game do
   # Note: works in iex if pass board as parameter, but doesn't save
   # NB: set up so directly modifies state board? change name to game
   def update_board(game, x, y, value) do
-    new_board = put_in(game.game_board[x][y], value)
-    game |> Map.put(:game_board, new_board)
+    new_board = put_in(game.board_matrix[x][y], value)
+    game |> Map.put(:board_matrix, new_board)
   end
 
   # Get value of game board
   def get_value(game, x, y) do
-    game.game_board[x][y]
+    game.board_matrix[x][y]
   end
 
   # Update value of number of tokens
   def update_score(game, team) do
     case team do
-      :dark -> game |> Map.put(:num_dark, game[:num_dark] - 1)
-      :light -> game |> Map.put(:num_light, game[:num_light] - 1)
+      :dark -> game |> Map.put(:total_dark, game[:total_dark] - 1)
+      :light -> game |> Map.put(:total_light, game[:total_light] - 1)
     end
   end
 
@@ -170,23 +170,23 @@ defmodule Checkersgame.Game do
   def update_piece_list(game, team, piece, new_x, new_y) do
     case team do
       :dark ->
-        game.all_dark_pieces
-        |> Map.put([new_x, new_y], game.all_dark_pieces.get(piece))
+        game.list_dark
+        |> Map.put([new_x, new_y], game.list_dark.get(piece))
         |> Map.delete(piece)
 
       # Question: Does |> mean Map output from put() is input for first param in Map.delete?
       # With this, saying function Map.delete/3 is undefined/private
-      # |> Map.delete(game.all_dark_pieces, piece)
+      # |> Map.delete(game.list_dark, piece)
       # Question: same issue with above Map.put
 
       :light ->
-        game.all_light_pieces
-        |> Map.put([new_x, new_y], game.all_light_pieces.get(piece))
+        game.list_light
+        |> Map.put([new_x, new_y], game.list_light.get(piece))
         |> Map.delete(piece)
 
         # Question: Does |> mean Map output from put() is input for first param in Map.delete?
         # With this, saying function Map.delete/3 is undefined/private
-        # |> Map.delete(game.all_light_pieces, piece)
+        # |> Map.delete(game.list_light, piece)
     end
   end
 end

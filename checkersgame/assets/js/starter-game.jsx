@@ -41,6 +41,7 @@ class GameBoard extends Component {
       list_light: {},
       total_dark: 20,
       total_light: 20,
+
     };
 
     this.channel

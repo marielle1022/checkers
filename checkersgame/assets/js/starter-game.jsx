@@ -22,6 +22,10 @@ export default function game_init(root, channel) {
     total_light = number of light pieces
     *NB: need total numbers because there doesn't seem to be a simple way to seem
           if a map is empty
+
+    Referenced https://upmostly.com/tutorials/react-onclick-event-handling-with-examples  
+    to help structure the onclick functions within the dark and light tiles (and possibly
+        the board_matrix. This was written before that was completed)
   */
 
   //TODO: ANYTIME ANYTHING is done, send it to backupagent
@@ -35,7 +39,8 @@ class GameBoard extends Component {
       list_dark: {},
       list_light: {},
       total_dark: 20,
-      total_light: 20
+      total_light: 20,
+      move: []
     };
 
     this.channel
@@ -44,18 +49,58 @@ class GameBoard extends Component {
         .receive("error", resp => {console.log("Unable to join", resp); });
     
         console.log("after join")
-    this.channel.on("update", this.got_view.bind(this));
-  }
+        this.channel.on("update", this.got_view.bind(this));
+    }
 
-  got_view(view) {
-    console.log("new view", view);
-    this.setState(view.game);
-  }
+    got_view(view) {
+        console.log("new view", view);
+        this.setState(view.game);
+    }
+
+    handleClick = (piece) => {
+        let move = this.state.move;
+        if (move.length == 0) {
+            let val1 = piece.row;
+            let val2 = piece.col;
+            let team = piece.value;
+            move.push(val1);
+            move.push(val2)
+            move.push(team)
+            console.log("val1: " + val1 + " val2: " + val2 + " team: " + team)
+            this.setState({
+                move: move
+            })
+        }
+        console.log("move so far: ")
+        console.log(this.state.move)
+    }
 
 
-    handleClick(ev) {
+    tileClick = (tile) => {
+        let move = this.state.move;
+        console.log("tile clicked")
+        if (move.length == 3) {
+            let val1 = tile.row;
+            let val2 = tile.col;
+            move.push(val1);
+            move.push(val2)
+            this.setState({
+                move: move
+            })
+            this.channel.push("click", { move: move })
+            .receive("ok", this.got_view.bind(this));
+        }
+        console.log("in tileclick ")
+        move = []
+        this.setState({
+            move: move
+        })
+        console.log(this.state.move)
+    }
+
+    handleClick() {
         console.log("Clicked!")
-        console.log(ev.target)
+
         this.channel.push("click", { move: ev })
         .receive("ok", this.got_view.bind(this));
     }
@@ -77,7 +122,8 @@ class GameBoard extends Component {
                     row: piece[0],
                     col: piece[1],
                     rank: piece[2],
-                    team: piece[3]
+                    team: piece[3],
+                    value: 1
                 }
             )
         }
@@ -101,7 +147,8 @@ class GameBoard extends Component {
                     row: piece[0],
                     col: piece[1],
                     rank: piece[2],
-                    team: piece[3]
+                    team: piece[3],
+                    value: 2
                 }
             )
         }
@@ -160,9 +207,6 @@ class GameBoard extends Component {
         let board = this.createBoardMatrix();
         let dark_players = this.createDarkPieces();
         let light_players = this.createLightPieces();
-        console.log(dark_players)
-        console.log(light_players)
-        console.log(board)
 
         return (
             <div className="game-board">
@@ -178,7 +222,8 @@ class GameBoard extends Component {
                             gridRow: tile.row + 1,
                             gridColumn: tile.col + 1
                         }
-                    }
+                        }
+                        onClick = {() => {this.tileClick(tile)}}                    
                     /> :
                     <div 
                         key={i} 
@@ -187,8 +232,9 @@ class GameBoard extends Component {
                             {
                             gridRow: tile.row + 1,
                             gridColumn: tile.col + 1
+                            }
                         }
-                    }
+                    
                     />
                 ))
                 }
@@ -203,7 +249,7 @@ class GameBoard extends Component {
                             gridColumn: piece.col + 1
                         }}
                         className={piece.team}
-                        onClick={this.handleClick}
+
                         >
                     </div>
                     )
@@ -220,7 +266,8 @@ class GameBoard extends Component {
                             gridColumn: piece.col + 1
                         }}
                         className={piece.team}
-                        onClick={this.handleClick}                        
+
+                        onClick = {() => {this.handleClick(piece)}}                    
                         >
                     </div>
                     )

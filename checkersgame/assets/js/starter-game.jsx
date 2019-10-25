@@ -58,10 +58,7 @@ class GameBoard extends Component {
     }
 
     handleClick = (piece) => {
-<<<<<<< HEAD
-=======
         let move = this.state.move;
->>>>>>> aebfdda6cacaad7c05d73f9747389a3cc631f79a
         if (move.length == 0) {
             let val1 = piece.row;
             let val2 = piece.col;
@@ -240,8 +237,9 @@ class GameBoard extends Component {
                             gridColumn: piece.col + 1
                         }}
                         className={piece.team}
-
+                        onClick = {() => {this.handleClick(piece)}}
                         >
+                        <img src="/images/blue-piece.png"/>
                     </div>
                     )
                 })
@@ -257,9 +255,9 @@ class GameBoard extends Component {
                             gridColumn: piece.col + 1
                         }}
                         className={piece.team}
-
                         onClick = {() => {this.handleClick(piece)}}
                         >
+                        <img src="/images/grey-piece.png"/>
                     </div>
                     )
                 })

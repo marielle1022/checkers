@@ -32,7 +32,14 @@ defmodule Checkersgame.Game do
       board_matrix: game.board_matrix,
       move: [0, 0, 0, 0, 0],
       check_move:
-        start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
+        start_move(
+          game,
+          Enum.at(game.move, 0),
+          Enum.at(game.move, 1),
+          Enum.at(game.move, 2),
+          Enum.at(game.move, 3),
+          Enum.at(game.move, 4)
+        ),
       # check_move: start_move(game, move[1], move[2], move[3], move[4], move[5]),
       list_dark: game.list_dark,
       list_light: game.list_light,

@@ -22,6 +22,7 @@ defmodule Checkersgame.Piece do
     }
   end
 
+  # x and y are location of click
   def start_move_check_king(game, piece, x, y) do
     if check_valid(game, piece, x, y) != false do
       tempRank = piece.rank

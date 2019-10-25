@@ -36,11 +36,11 @@ class GameBoard extends Component {
     this.state = {
       board_matrix: {},
       move: [],
+      check_move: false,
       list_dark: {},
       list_light: {},
       total_dark: 20,
       total_light: 20,
-      move: []
     };
 
     this.channel

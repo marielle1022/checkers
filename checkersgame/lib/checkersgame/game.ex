@@ -15,6 +15,8 @@ defmodule Checkersgame.Game do
       game_board: create_board(),
       num_dark: 20,
       num_light: 20,
+      move: [0, 0, 0, 0, 0],
+      check_move: false,
       all_dark_pieces: create_dark_pieces(),
       all_light_pieces: create_light_pieces()
     }
@@ -28,9 +30,10 @@ defmodule Checkersgame.Game do
     # First need to take in click params, get piece matching params
     %{
       board_matrix: game.game_board,
-      move: [],
-      check_move:
-        start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
+      move: [0, 0, 0, 0, 0],
+      # check_move:
+      #   start_move(game, game.move[0], game.move[1], game.move[2], game.move[3], game.move[4]),
+      check_move: start_move(game, move[1], 2, 3, 4, 5),
       list_dark: game.all_dark_pieces,
       list_light: game.all_light_pieces,
       total_dark: game.num_dark,
@@ -55,15 +58,16 @@ defmodule Checkersgame.Game do
   # end
 
   def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
-    case team do
-      1 ->
-        piece = game.list_dark.fetch([starting_x, starting_y])
-        piece.start_move_check_king(game, piece, ending_x, ending_y)
-
-      2 ->
-        piece = game.list_light.fetch([starting_x, starting_y])
-        piece.start_move_check_king(game, piece, ending_x, ending_y)
+    if team === 1 do
+      # piece = game.list_dark.fetch([starting_x, starting_y])
+      "hi"
+      # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+    else
+      "bye"
+      # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
     end
+
+    # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
   end
 
   # To create nested map, used

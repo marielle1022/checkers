@@ -30,7 +30,7 @@ defmodule Checkersgame.Game do
     # First need to take in click params, get piece matching params
     %{
       board_matrix: game.board_matrix,
-      move: [0, 0, 0, 0, 0],
+      move: [],
       check_move:
         start_move(
           game,

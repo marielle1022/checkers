@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 export default function game_init(root, channel) {
-    console.log("sindei" );
     console.log(channel)
   ReactDOM.render(<GameBoard channel={channel}/>, root);
 }
@@ -89,6 +88,7 @@ class GameBoard extends Component {
             this.setState({
                 move: move
             })
+            console.log("Sending through channel...")
             console.log(this.state.move)
             this.channel.push("click", { x: move[0], y: move[1],
              team: move[2], destX: move[3], destY: move[4] })
@@ -198,7 +198,7 @@ class GameBoard extends Component {
         let board = this.createBoardMatrix();
         let dark_players = this.createDarkPieces();
         let light_players = this.createLightPieces();
-
+        console.log(board)
         return (
             <div className="game-board">
 

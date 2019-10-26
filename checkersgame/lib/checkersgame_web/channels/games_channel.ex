@@ -62,17 +62,21 @@ defmodule CheckersgameWeb.GamesChannel do
 
     case Game.click(socket.assigns[:game], ll) do
       :ok ->
+        # IO.puts("fishtank")
         socket = assign(socket, :game, game)
         BackupAgent.put(name, game)
         broadcast!(socket, "update", %{"game" => Game.client_view(game)})
         {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
 
       game ->
+        # IO.puts("straw")
         socket = assign(socket, :game, game)
         BackupAgent.put(name, game)
         broadcast!(socket, "update", %{"game" => Game.client_view(game)})
         {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
     end
+
+    # IO.puts("llama")
 
     # game = BackupAgent.get(name)
     # BackupAgent.put(name, game)

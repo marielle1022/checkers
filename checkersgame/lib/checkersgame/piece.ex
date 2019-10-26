@@ -30,6 +30,9 @@ defmodule Checkersgame.Piece do
       IO.puts("basil")
       tempRank = piece.rank
       tempTeam = piece.team
+      IO.inspect(tempRank)
+      IO.inspect(tempTeam)
+      IO.puts("alpaca")
 
       # case {tempRank, tempTeam, x} do
       #   {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
@@ -60,6 +63,8 @@ defmodule Checkersgame.Piece do
 
   def check_valid(game, piece, x, y) do
     IO.puts("Sokka")
+    IO.inspect(game)
+    IO.puts("Toph")
     IO.inspect(piece.team)
     #
     # case {piece.team, Checkersgame.Game.get_value(game, x, y)} do

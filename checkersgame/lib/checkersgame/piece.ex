@@ -29,6 +29,7 @@ defmodule Checkersgame.Piece do
       tempTeam = piece.team
       IO.inspect(tempRank)
       IO.inspect(tempTeam)
+      IO.inspect(game)
       IO.puts("alpaca")
 
       # case {tempRank, tempTeam, x} do
@@ -80,19 +81,17 @@ defmodule Checkersgame.Piece do
         input_piece
       ) do
     IO.puts("groot")
+    game = Checkersgame.Game.update_board(game, original_x, original_y, 0)
+    IO.puts("mj")
+    IO.inspect(game)
+    game = Checkersgame.Game.update_board(game, new_x, new_y, new_value)
+    IO.puts("guy in the chair")
+    IO.inspect(game)
+    IO.puts("rocket racoon")
     IO.inspect(input_piece)
-    Checkersgame.Game.update_board(game, original_x, original_y, 0)
-    Checkersgame.Game.update_board(game, new_x, new_y, new_value)
-    IO.puts("rocket")
-    # input_piece.location_x = 12
-    abcde = Map.get(input_piece, :location_x)
-    IO.puts(abcde)
-    Map.replace!(input_piece, :location_x, "abc")
-    Map.put(input_piece, :test, 44)
-    # input_piece |> Map.put(:location_x, new_x)
-    IO.inspect(input_piece)
+    input_piece = Map.put(input_piece, :location_x, new_x)
+    input_piece = Map.put(input_piece, :location_y, new_y)
     IO.puts("mantis")
-    input_piece |> Map.put(:location_y, new_y)
     IO.inspect(input_piece)
   end
 
@@ -121,7 +120,7 @@ defmodule Checkersgame.Piece do
         IO.puts("b")
         IO.puts(b)
         IO.puts("iron man")
-        update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
+        game = update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 1 and b == original_y - 1 ->
         IO.puts("a")

@@ -26,6 +26,8 @@ defmodule Checkersgame.Game do
   # In game state - Have map w/ state
   # in board - store references to pieces
   def client_view(game) do
+    IO.inspect(game)
+    IO.puts("nick fury")
     # Need to call start_move_check_king(game, piece, x, y) there
     # First need to take in click params, get piece matching params
     %{
@@ -72,10 +74,10 @@ defmodule Checkersgame.Game do
   # Click is funtioning properly (sending to Piece logic) but still need handle_out
   def click(game, ll) do
     if Enum.at(ll, 2) == 1 do
-      piece = Map.fetch(game.list_dark, [Enum.at(ll, 0), Enum.at(ll, 1)])
+      piece = Map.get(game.list_dark, [Enum.at(ll, 0), Enum.at(ll, 1)])
       Checkersgame.Piece.start_move_check_king(game, piece, Enum.at(ll, 3), Enum.at(ll, 4))
     else
-      piece = Map.fetch(game.list_light, [Enum.at(ll, 0), Enum.at(ll, 1)])
+      piece = Map.get(game.list_light, [Enum.at(ll, 0), Enum.at(ll, 1)])
       Checkersgame.Piece.start_move_check_king(game, piece, Enum.at(ll, 3), Enum.at(ll, 4))
     end
   end

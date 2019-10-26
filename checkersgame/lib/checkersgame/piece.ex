@@ -27,29 +27,30 @@ defmodule Checkersgame.Piece do
     IO.puts("saber-tooth moose lion")
 
     if check_valid(game, piece, x, y) != false do
+      IO.puts("basil")
       tempRank = piece.rank
       tempTeam = piece.team
 
-      case {tempRank, tempTeam, x} do
-        {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
-          "make king"
+      # case {tempRank, tempTeam, x} do
+      #   {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
+      #     "make king"
+      #
+      #   #  make_king(game, piece)
+      #
+      #   {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
+      #     "make king"
+      #
+      #   #  make_king(game, piece)
+      #
+      #   _ ->
+      #     "No change to rank"
 
-        #  make_king(game, piece)
-
-        {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
-          "make king"
-
-        #  make_king(game, piece)
-
-        _ ->
-          "No change to rank"
-
-          # if piece.rank(is(:normal) and piece.team(is(:dark and x == 9))) do
-          #  piece.rank = :king
-          # else
-          #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
-          #  piece.rank = :king
-      end
+      # if piece.rank(is(:normal) and piece.team(is(:dark and x == 9))) do
+      #  piece.rank = :king
+      # else
+      #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
+      #  piece.rank = :king
+      # end
     end
   end
 
@@ -59,13 +60,14 @@ defmodule Checkersgame.Piece do
 
   def check_valid(game, piece, x, y) do
     IO.puts("Sokka")
-
-    case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
-      {:dark, 0} -> check_dark(game, piece, x, y, 1)
-      {:light, 0} -> check_light(game, piece, x, y, 2)
-      # This means that the square clicked is light or occupied
-      _ -> false
-    end
+    IO.inspect(piece.team)
+    #
+    # case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
+    #   {:dark, 0} -> check_dark(game, piece, x, y, 1)
+    #   {:light, 0} -> check_light(game, piece, x, y, 2)
+    #   # This means that the square clicked is light or occupied
+    #   _ -> false
+    # end
   end
 
   # Update both the origianl location and the location moved to

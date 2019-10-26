@@ -64,24 +64,27 @@ defmodule Checkersgame.Game do
   #   }
   # end
 
-  # def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
+  # super basic, just trying to fix big red error
   def click(game, ll) do
     IO.puts("whatever")
-
-    # if ll == 7 do
-    #   IO.puts("abc")
-    #   # piece = game.list_dark.fetch([starting_x, starting_y])
-    #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-    #   # "hi"
-    # else
-    #   IO.puts("bye")
-    #   # piece = game.list_light.fetch([starting_x, starting_y])
-    #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-    #   # "bye"
-    # end
-
-    # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
   end
+
+  # def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
+
+  # if ll == 7 do
+  #   IO.puts("abc")
+  #   # piece = game.list_dark.fetch([starting_x, starting_y])
+  #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+  #   # "hi"
+  # else
+  #   IO.puts("bye")
+  #   # piece = game.list_light.fetch([starting_x, starting_y])
+  #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+  #   # "bye"
+  # end
+
+  # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+  # end
 
   # To create nested map, used
   # https://blog.danielberkompas.com/2016/04/23/multidimensional-arrays-in-elixir/

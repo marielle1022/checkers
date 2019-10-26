@@ -194,9 +194,9 @@ class GameBoard extends Component {
         return board_matrix;
     }
 
+    // First 3 lines: update pieces and board
     render() {
 
-        // Update pieces + board
         let board = this.createBoardMatrix();
         let dark_players = this.createDarkPieces();
         let light_players = this.createLightPieces();

@@ -65,9 +65,13 @@ defmodule Checkersgame.Game do
   # end
 
   def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
-    if team === 1 do
-      piece = game.list_dark.fetch([starting_x, starting_y])
+    IO.puts("whatever")
+
+    if team == 1 do
+      IO.puts("abc")
+      # piece = game.list_dark.fetch([starting_x, starting_y])
       # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+      # "hi"
     else
       # piece = game.list_light.fetch([starting_x, starting_y])
       # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)

@@ -65,7 +65,7 @@ defmodule Checkersgame.Game do
   # end
 
   # super basic, just trying to fix big red error
-  def click(game) do
+  def click(game, ll) do
     IO.puts("whatever")
   end
 

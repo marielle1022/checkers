@@ -56,7 +56,7 @@ defmodule CheckersgameWeb.GamesChannel do
 
   # Attempt to fix big red error
   def handle_in("click", %{"click" => ll}, socket) do
-    IO.puts("I am here")
+    IO.puts("walrus")
     name = socket.assigns[:name]
     game = BackupAgent.get(name)
 
@@ -114,6 +114,7 @@ defmodule CheckersgameWeb.GamesChannel do
 
   # Add authorization logic here as required.
   defp authorized?(_payload) do
+    IO.puts("payload authorized")
     true
   end
 end

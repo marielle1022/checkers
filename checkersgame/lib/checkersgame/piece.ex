@@ -24,6 +24,8 @@ defmodule Checkersgame.Piece do
 
   # x and y are location of click
   def start_move_check_king(game, piece, x, y) do
+    IO.puts("saber-tooth moose lion")
+
     if check_valid(game, piece, x, y) != false do
       tempRank = piece.rank
       tempTeam = piece.team
@@ -56,6 +58,8 @@ defmodule Checkersgame.Piece do
   # end
 
   def check_valid(game, piece, x, y) do
+    IO.puts("Sokka")
+
     case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
       {:dark, 0} -> check_dark(game, piece, x, y, 1)
       {:light, 0} -> check_light(game, piece, x, y, 2)

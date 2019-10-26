@@ -65,23 +65,20 @@ defmodule Checkersgame.Game do
   # end
 
   # super basic, just trying to fix big red error
-  def click(game, ll) do
-    IO.puts("whatever")
-  end
-
-  # def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
-
-  # if ll == 7 do
-  #   IO.puts("abc")
-  #   # piece = game.list_dark.fetch([starting_x, starting_y])
-  #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-  #   # "hi"
-  # else
-  #   IO.puts("bye")
-  #   # piece = game.list_light.fetch([starting_x, starting_y])
-  #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-  #   # "bye"
+  # def click(game, ll) do
+  #   IO.puts("lamp")
   # end
+
+  # Click is funtioning properly (sending to Piece logic) but still need handle_out
+  def click(game, ll) do
+    if Enum.at(ll, 2) == 1 do
+      piece = Map.fetch(game.list_dark, [Enum.at(ll, 0), Enum.at(ll, 1)])
+      Checkersgame.Piece.start_move_check_king(game, piece, Enum.at(ll, 3), Enum.at(ll, 4))
+    else
+      piece = Map.fetch(game.list_light, [Enum.at(ll, 0), Enum.at(ll, 1)])
+      Checkersgame.Piece.start_move_check_king(game, piece, Enum.at(ll, 3), Enum.at(ll, 4))
+    end
+  end
 
   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
   # end

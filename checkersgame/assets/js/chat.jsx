@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 
 //TODO: figure this out
-// export default function chat_init(root, channel) {
-//     console.log("sindei" );
-//     console.log(channel)
-//   ReactDOM.render(<GameBoard channel={channel}/>, root);
-// }
-
   //TODO: ANYTIME ANYTHING is done, send it to backupagent
 class Chat extends Component {
   constructor(props) {
@@ -33,9 +27,8 @@ class Chat extends Component {
 
 
     handleClick() {
-        console.log("Clicked!")
-
-        this.channel.push("click", { move: ev })
+        console.log("Shout!")
+        this.channel.push("message", { move: ev })
         .receive("ok", this.got_view.bind(this));
     }
 
@@ -43,6 +36,8 @@ class Chat extends Component {
     render() {
 
         return (
+            <div className="chat">
+            </div>
 
         );
     }

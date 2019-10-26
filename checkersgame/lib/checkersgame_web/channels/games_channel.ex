@@ -36,6 +36,8 @@ defmodule CheckersgameWeb.GamesChannel do
   # end
 
   def join("games:" <> name, payload, socket) do
+    IO.puts("hi all")
+
     if authorized?(payload) do
       game = BackupAgent.get(name) || Game.new()
 
@@ -54,6 +56,7 @@ defmodule CheckersgameWeb.GamesChannel do
 
   # Attempt to fix big red error
   def handle_in("click", %{"click" => ll}, socket) do
+    IO.puts("I am here")
     name = socket.assigns[:name]
     game = BackupAgent.get(name)
 

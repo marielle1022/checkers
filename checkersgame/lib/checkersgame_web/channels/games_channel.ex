@@ -7,7 +7,7 @@ defmodule CheckersgameWeb.GamesChannel do
   # Citation: for structure and other information in many of the functions,
   # used hangman-2019-01 branch 2019-10-multiplayer-for-real
 
-  intercept ["update"]
+  # intercept ["update"]
 
   # def join("games:" <> game, payload, socket) do
   #   if authorized?(payload) do

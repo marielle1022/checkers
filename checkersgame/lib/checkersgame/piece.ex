@@ -24,10 +24,7 @@ defmodule Checkersgame.Piece do
 
   # x and y are location of click
   def start_move_check_king(game, piece, x, y) do
-    IO.puts("saber-tooth moose lion")
-
     if check_valid(game, piece, x, y) != false do
-      IO.puts("basil")
       tempRank = piece.rank
       tempTeam = piece.team
       IO.inspect(tempRank)
@@ -62,17 +59,14 @@ defmodule Checkersgame.Piece do
   # end
 
   def check_valid(game, piece, x, y) do
-    IO.puts("Sokka")
-    IO.inspect(game)
     IO.puts("Toph")
-    IO.inspect(piece.team)
-    #
-    # case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
-    #   {:dark, 0} -> check_dark(game, piece, x, y, 1)
-    #   {:light, 0} -> check_light(game, piece, x, y, 2)
-    #   # This means that the square clicked is light or occupied
-    #   _ -> false
-    # end
+
+    case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
+      {:dark, 0} -> check_dark(game, piece, x, y, 1)
+      {:light, 0} -> check_light(game, piece, x, y, 2)
+      # This means that the square clicked is light or occupied
+      _ -> false
+    end
   end
 
   # Update both the origianl location and the location moved to
@@ -85,10 +79,21 @@ defmodule Checkersgame.Piece do
         new_value,
         input_piece
       ) do
+    IO.puts("groot")
+    IO.inspect(input_piece)
     Checkersgame.Game.update_board(game, original_x, original_y, 0)
     Checkersgame.Game.update_board(game, new_x, new_y, new_value)
-    input_piece |> Map.put(:location_x, new_x)
+    IO.puts("rocket")
+    # input_piece.location_x = 12
+    abcde = Map.get(input_piece, :location_x)
+    IO.puts(abcde)
+    Map.replace!(input_piece, :location_x, "abc")
+    Map.put(input_piece, :test, 44)
+    # input_piece |> Map.put(:location_x, new_x)
+    IO.inspect(input_piece)
+    IO.puts("mantis")
     input_piece |> Map.put(:location_y, new_y)
+    IO.inspect(input_piece)
   end
 
   # Dark pieces start at the top
@@ -96,18 +101,42 @@ defmodule Checkersgame.Piece do
   # The (x, y) input represent the location that has been clicked.
   # This is only being called if the value for the clicked square in the matrix is 0.
   def check_dark(game, dark_piece, x, y, new_value) do
+    IO.puts("hulk")
     # Store original values for starting x, y of piece
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
+    IO.puts("x")
+    IO.puts(x)
+    IO.puts("y")
+    IO.puts(y)
+    IO.puts("original_x")
+    IO.puts(original_x)
+    IO.puts("original_y")
+    IO.puts(original_y)
 
     case {x, y} do
       {a, b} when a == original_x + 1 and b == original_y + 1 ->
+        IO.puts("a")
+        IO.puts(a)
+        IO.puts("b")
+        IO.puts(b)
+        IO.puts("iron man")
         update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 1 and b == original_y - 1 ->
+        IO.puts("a")
+        IO.puts(a)
+        IO.puts("b")
+        IO.puts(b)
+        IO.puts("spider man")
         update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 2 and b == original_y + 2 ->
+        IO.puts("a")
+        IO.puts(a)
+        IO.puts("b")
+        IO.puts(b)
+        IO.puts("black widow")
         check_dark_single_jump(game, dark_piece, x, y)
 
       # if (Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == ) do
@@ -115,14 +144,24 @@ defmodule Checkersgame.Piece do
       # Send to function checking valid 1 move jumps
 
       {a, b} when a == original_x + 2 and b == original_y - 2 ->
+        IO.puts("a")
+        IO.puts(a)
+        IO.puts("b")
+        IO.puts(b)
+        IO.puts("man in the chair")
         check_dark_single_jump(game, dark_piece, x, y)
 
       # Send to function checking valid 1 move jumps
 
       _ ->
+        # IO.puts(a)
+        # IO.puts(b)
+        IO.puts("captain america")
         "Send to check >1 move jumps"
         # With any other location, send to function checking valid >1 move jumps
     end
+
+    IO.puts("end")
   end
 
   # Light pieces start at the bottom
@@ -163,6 +202,8 @@ defmodule Checkersgame.Piece do
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
     team_piece = dark_piece.team
+
+    IO.puts("thor")
 
     case {team_piece, x, y} do
       {:dark, a, b} when a == original_x + 2 and b == original_y + 2 ->

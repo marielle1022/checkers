@@ -26,8 +26,6 @@ defmodule Checkersgame.Game do
   # In game state - Have map w/ state
   # in board - store references to pieces
   def client_view(game) do
-    IO.inspect(game)
-    IO.puts("nick fury")
     # Need to call start_move_check_king(game, piece, x, y) there
     # First need to take in click params, get piece matching params
     %{
@@ -162,8 +160,20 @@ defmodule Checkersgame.Game do
   # Note: works in iex if pass board as parameter, but doesn't save
   # NB: set up so directly modifies state board? change name to game
   def update_board(game, x, y, value) do
-    new_board = put_in(game.board_matrix[x][y], value)
-    game |> Map.put(:board_matrix, new_board)
+    # IO.puts("x below")
+    # IO.puts(x)
+    # IO.puts("y below")
+    # IO.puts(y)
+    # IO.puts("value below")
+    # IO.puts(value)
+    # IO.puts("nebula")
+    # IO.inspect(game.board_matrix)
+    # new_board = put_in(game.board_matrix[x][y], value)
+    # IO.puts("gamora")
+    # IO.inspect(new_board)
+    # game |> Map.put(:board_matrix, new_board)
+    IO.puts("scarlet witch")
+    # IO.inspect(game.board_matrix)
   end
 
   # Get value of game board

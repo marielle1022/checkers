@@ -31,15 +31,15 @@ defmodule Checkersgame.Game do
     %{
       board_matrix: game.board_matrix,
       move: [],
-      check_move:
-        start_move(
-          game,
-          Enum.at(game.move, 0),
-          Enum.at(game.move, 1),
-          Enum.at(game.move, 2),
-          Enum.at(game.move, 3),
-          Enum.at(game.move, 4)
-        ),
+      # check_move: click(7),
+      # start_move(
+      #   game,
+      #   Enum.at(game.move, 0),
+      #   Enum.at(game.move, 1),
+      #   Enum.at(game.move, 2),
+      #   Enum.at(game.move, 3),
+      #   Enum.at(game.move, 4)
+      # ),
       # check_move: start_move(game, move[1], move[2], move[3], move[4], move[5]),
       list_dark: game.list_dark,
       list_light: game.list_light,
@@ -64,19 +64,21 @@ defmodule Checkersgame.Game do
   #   }
   # end
 
-  def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
+  # def start_move(game, starting_x, starting_y, team, ending_x, ending_y) do
+  def click(game, ll) do
     IO.puts("whatever")
 
-    if team == 1 do
-      IO.puts("abc")
-      # piece = game.list_dark.fetch([starting_x, starting_y])
-      # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-      # "hi"
-    else
-      # piece = game.list_light.fetch([starting_x, starting_y])
-      # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-      "bye"
-    end
+    # if ll == 7 do
+    #   IO.puts("abc")
+    #   # piece = game.list_dark.fetch([starting_x, starting_y])
+    #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+    #   # "hi"
+    # else
+    #   IO.puts("bye")
+    #   # piece = game.list_light.fetch([starting_x, starting_y])
+    #   # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
+    #   # "bye"
+    # end
 
     # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
   end

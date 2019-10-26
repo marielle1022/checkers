@@ -90,8 +90,10 @@ class GameBoard extends Component {
             })
             console.log("Sending through channel...")
             console.log(this.state.move)
-            this.channel.push("click", { x: move[0], y: move[1],
-             team: move[2], destX: move[3], destY: move[4] })
+            // this.channel.push("click", { x: move[0], y: move[1],
+            //  team: move[2], destX: move[3], destY: move[4] })
+            // .receive("ok", this.got_view.bind(this));
+            this.channel.push("click", { x: move[0]})
             .receive("ok", this.got_view.bind(this));
         }
     }

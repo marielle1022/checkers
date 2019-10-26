@@ -52,13 +52,82 @@ defmodule CheckersgameWeb.GamesChannel do
     end
   end
 
-  def handle_in("click", %{"move" => ll}, socket) do
+  # #memory.ex
+  #   def click(game, i) do
+  #   letter = Enum.at(game.showed, i)
+  #   last = game.lastClicked
+  #   cond do
+  #     letter != " " ->
+  #       game
+  #     last == -1 ->
+  #       exposeValue(game, i, i)
+  #     Enum.at(game.tileValue, last) == Enum.at(game.tileValue, i) ->
+  #       st1 = exposeValue(game, i, -1)
+  #       st2 = markCompleted(game, last, i)
+  #       [st1, st2]
+  #     true ->
+  #       st1 = exposeValue(game, i, -1)
+  #       st2 = hide(game, last, i)
+  #       [st1, st2]
+  #   end
+  # end
+
+  # Channels can be used in a request/response fashion
+  # by sending replies to requests from the client
+  # weihan's memorygame
+  # def handle_in("click", %{"click" => i}, socket) do
+  #   name = socket.assigns[:name]
+  #
+  #   case Game.click(socket.assigns[:game], i) do
+  #     # Maybe this is gming from elixir side?
+  #     [st1, st2] ->
+  #       socket = assign(socket, :game, st1)
+  #       BackupAgent.put(name, st2)
+  #       Process.send_after(self(), {:update, st2}, 1000)
+  #       {:reply, {:ok, %{"game" => Game.client_view(st1)}}, socket}
+  #
+  #     game ->
+  #       socket = assign(socket, :game, game)
+  #       BackupAgent.put(name, game)
+  #       {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+  #   end
+  # end
+
+  def handle_in() do
+    IO.puts("hello")
+  end
+
+  def handle_in("click", %{"click" => ll}, socket) do
     name = socket.assigns[:name]
     game = BackupAgent.get(name)
-    BackupAgent.put(name, game)
-    broadcast!(socket, "update", %{"game" => Game.client_view(game)})
-    {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+
+    case Game.click(socket.assigns[:game], ll) do
+      :ok ->
+        socket = assign(socket, :game, game)
+        BackupAgent.put(name, game)
+        {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+
+      game ->
+        socket = assign(socket, :game, game)
+        BackupAgent.put(name, game)
+        broadcast!(socket, "update", %{"game" => Game.client_view(game)})
+        {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+    end
+
+    # game = BackupAgent.get(name)
+    # BackupAgent.put(name, game)
+    # broadcast!(socket, "update", %{"game" => Game.client_view(game)})
+    # {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
   end
+
+  # MOST RECENT HANDLE_IN
+  #   def handle_in("click", %{"move" => ll}, socket) do
+  #     name = socket.assigns[:name]
+  #     game = BackupAgent.get(name)
+  #     BackupAgent.put(name, game)
+  #     broadcast!(socket, "update", %{"game" => Game.client_view(game)})
+  #     {:reply, {:ok, %{"game" => Game.client_view(game)}}, socket}
+  #   end
 
   # # Channels can be used in a request/response fashion
   # # by sending replies to requests from the client

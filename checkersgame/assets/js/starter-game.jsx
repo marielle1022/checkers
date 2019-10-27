@@ -267,8 +267,9 @@ class GameBoard extends Component {
                         )
                     })
                     }
-
                 </div>
+                <h3>Dark Tiles Left: {this.state.total_dark}</h3>
+                <h3>Light Tiles Left: {this.state.total_light}</h3>
             </div>
         );
     }

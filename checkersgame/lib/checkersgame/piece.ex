@@ -24,7 +24,7 @@ defmodule Checkersgame.Piece do
 
   # x and y are location of click
   def start_move_check_king(game, piece, x, y) do
-    if check_valid(game, piece, x, y) != false do
+    if Checkersgame.Logic.logic_check_valid(game, piece, x, y) != false do
       game = check_valid(game, piece, x, y)
       # tempRank = piece.rank
       # tempTeam = piece.team
@@ -53,6 +53,8 @@ defmodule Checkersgame.Piece do
       #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
       #  piece.rank = :king
       # end
+    else
+      game
     end
   end
 
@@ -121,6 +123,22 @@ defmodule Checkersgame.Piece do
     # input_piece = Map.put(input_piece, :location_y, new_y)
   end
 
+  def remove_piece_dark(game, x, y) do
+    list_change = Map.delete(game.list_dark, [x, y])
+    num_dark = game.total_dark - 1
+    game = Map.put(game, :list_dark, list_change)
+    game = Map.put(game, :total_dark, num_dark)
+    # game = Checkersgame.Game.update_score(game, :dark)
+  end
+
+  def remove_piece_light(game, x, y) do
+    list_change = Map.delete(game.list_light, [x, y])
+    num_light = game.total_light - 1
+    game = Map.put(game, :list_light, list_change)
+    game = Map.put(game, :total_light, num_light)
+    # game = Checkersgame.Game.update_score(game, :light)
+  end
+
   # Dark pieces start at the top
   # Dark pieces are symbolized in the matrix with value 1
   # The (x, y) input represent the location that has been clicked.
@@ -151,8 +169,7 @@ defmodule Checkersgame.Piece do
       # Send to function checking valid 1 move jumps
 
       _ ->
-        IO.puts("captain america")
-        "Send to check >1 move jumps"
+        game
         # With any other location, send to function checking valid >1 move jumps
     end
   end
@@ -184,7 +201,7 @@ defmodule Checkersgame.Piece do
       # Send to function checking valid 1 move jumps
 
       _ ->
-        "Check valid >1 move jump"
+        game
         # With any other location, send to function checking valid >1 move jumps
     end
   end
@@ -201,20 +218,19 @@ defmodule Checkersgame.Piece do
     case {team_piece, x, y} do
       {:dark, a, b} when a == original_x + 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == 2 do
-          update_piece_board_dark(
-            game,
-            original_x,
-            original_y,
-            original_x + 2,
-            original_y + 2,
-            1,
-            dark_piece
-          )
+          game =
+            update_piece_board_dark(
+              game,
+              original_x,
+              original_y,
+              original_x + 2,
+              original_y + 2,
+              1,
+              dark_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x + 1, original_y + 1, 0)
-          # add one to score for dark team
-          # INSTEAD -- subtract one token from total number of light tokens
-          Checkersgame.Game.update_score(game, :light)
+          game = Checkersgame.Game.update_board(game, original_x + 1, original_y + 1, 0)
+          game = remove_piece_light(game, original_x + 1, original_y + 1)
         else
           # This jump is not valid
           false
@@ -222,18 +238,19 @@ defmodule Checkersgame.Piece do
 
       {:dark, a, b} when a == original_x + 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y - 1) == 2 do
-          update_piece_board_dark(
-            game,
-            original_x,
-            original_y,
-            original_x + 2,
-            original_y - 2,
-            1,
-            dark_piece
-          )
+          game =
+            update_piece_board_dark(
+              game,
+              original_x,
+              original_y,
+              original_x + 2,
+              original_y - 2,
+              1,
+              dark_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x + 1, original_y - 1, 0)
-          Checkersgame.Game.update_score(game, :light)
+          game = Checkersgame.Game.update_board(game, original_x + 1, original_y - 1, 0)
+          game = remove_piece_light(game, original_x + 1, original_y - 1)
         else
           # This jump is not valid
           false
@@ -242,18 +259,19 @@ defmodule Checkersgame.Piece do
       # Used for light kings
       {:light, a, b} when a == original_x + 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == 1 do
-          update_piece_board_light(
-            game,
-            original_x,
-            original_y,
-            original_x + 2,
-            original_y + 2,
-            2,
-            dark_piece
-          )
+          game =
+            update_piece_board_light(
+              game,
+              original_x,
+              original_y,
+              original_x + 2,
+              original_y + 2,
+              2,
+              dark_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x + 1, original_y + 1, 0)
-          Checkersgame.Game.update_score(game, :dark)
+          game = Checkersgame.Game.update_board(game, original_x + 1, original_y + 1, 0)
+          game = remove_piece_dark(game, original_x + 1, original_y + 1)
         else
           # This jump is not valid
           false
@@ -261,19 +279,19 @@ defmodule Checkersgame.Piece do
 
       {:light, a, b} when a == original_x + 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y - 1) == 1 do
-          update_piece_board_light(
-            game,
-            original_x,
-            original_y,
-            original_x + 2,
-            original_y - 2,
-            2,
-            dark_piece
-          )
+          game =
+            update_piece_board_light(
+              game,
+              original_x,
+              original_y,
+              original_x + 2,
+              original_y - 2,
+              2,
+              dark_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x + 1, original_y - 1, 0)
-          # add one to score for LIGHT team
-          Checkersgame.Game.update_score(game, :dark)
+          game = Checkersgame.Game.update_board(game, original_x + 1, original_y - 1, 0)
+          game = remove_piece_dark(game, original_x + 1, original_y - 1)
         else
           # This jump is not valid
           false
@@ -291,21 +309,22 @@ defmodule Checkersgame.Piece do
     case {team_piece, x, y} do
       {:light, a, b} when a == original_x - 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y - 1) == 1 do
-          update_piece_board_light(
-            game,
-            original_x,
-            original_y,
-            original_x - 2,
-            original_y - 2,
-            2,
-            light_piece
-          )
+          game =
+            update_piece_board_light(
+              game,
+              original_x,
+              original_y,
+              original_x - 2,
+              original_y - 2,
+              2,
+              light_piece
+            )
 
           # This removes the intermediary piece from the matrix -- BUT How to remove the piece itself?
           # Does the matrix update the buttons?
-          Checkersgame.Game.update_board(game, original_x - 1, original_y - 1, 0)
+          game = Checkersgame.Game.update_board(game, original_x - 1, original_y - 1, 0)
+          game = remove_piece_dark(game, original_x - 1, original_y - 1)
           # add one to score for dark team
-          Checkersgame.Game.update_score(game, :dark)
         else
           # This jump is not valid
           false
@@ -313,19 +332,19 @@ defmodule Checkersgame.Piece do
 
       {:light, a, b} when a == original_x - 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y + 1) == 1 do
-          update_piece_board_light(
-            game,
-            original_x,
-            original_y,
-            original_x - 2,
-            original_y + 2,
-            2,
-            light_piece
-          )
+          game =
+            update_piece_board_light(
+              game,
+              original_x,
+              original_y,
+              original_x - 2,
+              original_y + 2,
+              2,
+              light_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x - 1, original_y + 1, 0)
-          # add one to score for dark team
-          Checkersgame.Game.update_score(game, :dark)
+          game = Checkersgame.Game.update_board(game, original_x - 1, original_y + 1, 0)
+          game = remove_piece_dark(game, original_x - 1, original_y + 1)
         else
           # This jump is not valid
           false
@@ -334,21 +353,19 @@ defmodule Checkersgame.Piece do
       # Used for dark kings
       {:dark, a, b} when a == original_x - 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y - 1) == 2 do
-          update_piece_board_dark(
-            game,
-            original_x,
-            original_y,
-            original_x - 2,
-            original_y - 2,
-            1,
-            light_piece
-          )
+          game =
+            update_piece_board_dark(
+              game,
+              original_x,
+              original_y,
+              original_x - 2,
+              original_y - 2,
+              1,
+              light_piece
+            )
 
-          # This removes the intermediary piece from the matrix -- BUT How to remove the piece itself?
-          # Does the matrix update the buttons?
-          Checkersgame.Game.update_board(game, original_x - 1, original_y - 1, 0)
-          # add one to score for dark team
-          Checkersgame.Game.update_score(game, :light)
+          game = Checkersgame.Game.update_board(game, original_x - 1, original_y - 1, 0)
+          game = remove_piece_light(game, original_x - 1, original_y - 1)
         else
           # This jump is not valid
           false
@@ -356,19 +373,19 @@ defmodule Checkersgame.Piece do
 
       {:dark, a, b} when a == original_x - 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y + 1) == 2 do
-          update_piece_board_dark(
-            game,
-            original_x,
-            original_y,
-            original_x - 2,
-            original_y + 2,
-            1,
-            light_piece
-          )
+          game =
+            update_piece_board_dark(
+              game,
+              original_x,
+              original_y,
+              original_x - 2,
+              original_y + 2,
+              1,
+              light_piece
+            )
 
-          Checkersgame.Game.update_board(game, original_x - 1, original_y + 1, 0)
-          # add one to score for dark team
-          Checkersgame.Game.update_score(game, :light)
+          game = Checkersgame.Game.update_board(game, original_x - 1, original_y + 1, 0)
+          game = remove_piece_light(game, original_x - 1, original_y + 1)
         else
           # This jump is not valid
           false

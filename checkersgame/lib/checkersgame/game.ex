@@ -1,17 +1,10 @@
 defmodule Checkersgame.Game do
-  # Note: Is this alias only usable within this module?
-  # Question: Should Piece module be nexted within this?
   alias Checkersgame.Game, as: Game
   import Checkersgame.Piece
 
-  # NB: use agents to implement states?!
-
-  # TODO: ANYTIME ANYTHING is done, send it to backupagent
-
   def new do
     %{
-      # set up matrix
-      # Question: how to define this so it can be updated at each move? Is it possible?
+      # set up matrix -- this is the layout for the whole board
       board_matrix: create_board(),
       move: [],
       check_move: false,
@@ -22,25 +15,10 @@ defmodule Checkersgame.Game do
     }
   end
 
-  # Gen Server - Has observers, game state, etc (in map)
-  # In game state - Have map w/ state
-  # in board - store references to pieces
   def client_view(game) do
-    # Need to call start_move_check_king(game, piece, x, y) there
-    # First need to take in click params, get piece matching params
     %{
       board_matrix: game.board_matrix,
       move: [],
-      # check_move: click(7),
-      # start_move(
-      #   game,
-      #   Enum.at(game.move, 0),
-      #   Enum.at(game.move, 1),
-      #   Enum.at(game.move, 2),
-      #   Enum.at(game.move, 3),
-      #   Enum.at(game.move, 4)
-      # ),
-      # check_move: start_move(game, move[1], move[2], move[3], move[4], move[5]),
       list_dark: game.list_dark,
       list_light: game.list_light,
       total_dark: game.total_dark,
@@ -48,28 +26,6 @@ defmodule Checkersgame.Game do
     }
   end
 
-  # def client_view(game, name) do
-  #   client_board = game.board_matrix
-  #   current_dark = game.total_dark
-  #   current_light = game.total_light
-  #   list_dark = game.list_dark
-  #   list_light = game.list_light
-  #
-  #   %{
-  #     current_board: client_board,
-  #     total_dark: current_dark,
-  #     total_light: current_light,
-  #     dark_pieces: list_dark,
-  #     light_pieces: list_light
-  #   }
-  # end
-
-  # super basic, just trying to fix big red error
-  # def click(game, ll) do
-  #   IO.puts("lamp")
-  # end
-
-  # Click is funtioning properly (sending to Piece logic) but still need handle_out
   def click(game, ll) do
     if Enum.at(ll, 2) == 1 do
       piece = Map.get(game.list_dark, [Enum.at(ll, 0), Enum.at(ll, 1)])
@@ -79,9 +35,6 @@ defmodule Checkersgame.Game do
       Checkersgame.Piece.start_move_check_king(game, piece, Enum.at(ll, 3), Enum.at(ll, 4))
     end
   end
-
-  # Checkersgame.Piece.start_move_check_king(game, piece, ending_x, ending_y)
-  # end
 
   # To create nested map, used
   # https://blog.danielberkompas.com/2016/04/23/multidimensional-arrays-in-elixir/
@@ -157,19 +110,8 @@ defmodule Checkersgame.Game do
   # x: x coordinate of board matrix
   # y: y coordinate of board matrix
   # value: value to be put in board matrix at coordinates x, y
-  # Note: works in iex if pass board as parameter, but doesn't save
-  # NB: set up so directly modifies state board? change name to game
   def update_board(game, x, y, value) do
-    # new_board = put_in(game.board_matrix[x][y], value)
-    # game = put_in(game.board_matrix[x][y], value
     game = put_in(game.board_matrix[x][y], value)
-    # IO.puts("shuri")
-    # IO.inspect(game)
-    # game.board_matrix = new_board
-    # game |> Map.put(:board_matrix, new_board)
-    # game = Map.put(game, :board_matrix, new_board)
-    # IO.puts("okoye")
-    # IO.inspect(game)
   end
 
   # Get value of game board
@@ -182,15 +124,9 @@ defmodule Checkersgame.Game do
     case team do
       :dark ->
         game = Map.put(game, :total_dark, game.total_dark - 1)
-        IO.puts("QUEEN SHURI")
-        IO.inspect(game)
-        IO.puts("T'challa")
 
       :light ->
         game = Map.put(game, :total_light, game.total_light - 1)
-        IO.puts("QUEEN OKOYE")
-        IO.inspect(game)
-        IO.puts("M'baku")
     end
   end
 end

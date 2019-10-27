@@ -26,69 +26,12 @@ defmodule Checkersgame.Piece do
   def start_move_check_king(game, piece, x, y) do
     if Checkersgame.Logic.logic_check_valid(game, piece, x, y) != false do
       game = check_valid(game, piece, x, y)
-      #     IO.puts("benedict")
-      #     tempRank = piece.rank
-      #     tempTeam = piece.team
-      #     IO.inspect(tempTeam)
-      #     IO.inspect(tempRank)
-      #     IO.puts("wong")
-      #     # IO.inspect(tempRank)
-      #     # IO.inspect(tempTeam)
-      #     # # IO.inspect(game)
-      #     # IO.puts("alpaca")
-      #
-      #     case {tempRank, tempTeam, x} do
-      #       {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
-      #         IO.inspect(piece)
-      #         game = make_king(game, :dark, x, y)
-      #
-      #       # IO.puts("loki odinson")
-      #
-      #       #  make_king(game, piece)
-      #
-      #       {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
-      #         "make king"
-      #
-      #       #  make_king(game, piece)
-      #
-      #       _ ->
-      #         game
-      #     end
-      #
-      #     # if piece.rank(is(:normal) and piece.team(is(:dark and x == 9))) do
-      #     #  piece.rank = :king
-      #     # else
-      #     #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
-      #     #  piece.rank = :king
-      #     # end
-      #   else
-      #     game
-      #   end
-      # end
-      #
-      # def make_king(game, team, x, y) do
-      #   if team == :dark do
-      #     IO.puts("poor loki")
-      #     # IO.inspect(piece)
-      #     input_piece = Map.get(game.list_dark, [x, y])
-      #     input_piece = Map.put(input_piece, :rank, :king)
-      #     IO.inspect(input_piece)
-      #     list_change = Map.put(game.list_dark, [x, y], input_piece)
-      #     IO.inspect(list_change)
-      #     game = Map.put(game, :list_dark, list_change)
-      # IO.inspect(game)
-      # else
-      #   input_piece = Map.put(input_piece, :rank, :king)
-      #   list_change = Map.put(game.list_light, [x, y], input_piece)
-      #   game = Map.put(game, :list_light, list_change)
     else
       game
     end
   end
 
   def check_valid(game, piece, x, y) do
-    IO.puts("Toph")
-
     case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
       {:dark, 0} ->
         game = check_dark(game, piece, x, y, 1)
@@ -160,7 +103,6 @@ defmodule Checkersgame.Piece do
     num_light = game.total_light - 1
     game = Map.put(game, :list_light, list_change)
     game = Map.put(game, :total_light, num_light)
-    # game = Checkersgame.Game.update_score(game, :light)
   end
 
   # Dark pieces start at the top
@@ -168,7 +110,6 @@ defmodule Checkersgame.Piece do
   # The (x, y) input represent the location that has been clicked.
   # This is only being called if the value for the clicked square in the matrix is 0.
   def check_dark(game, dark_piece, x, y, new_value) do
-    IO.puts("hulk")
     # Store original values for starting x, y of piece
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
@@ -182,8 +123,6 @@ defmodule Checkersgame.Piece do
 
       {a, b} when a == original_x + 2 and b == original_y + 2 ->
         game = check_dark_single_jump(game, dark_piece, x, y)
-
-      # if (Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == ) do
 
       # Send to function checking valid 1 move jumps
 
@@ -236,8 +175,6 @@ defmodule Checkersgame.Piece do
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
     team_piece = dark_piece.team
-
-    IO.puts("thor")
 
     case {team_piece, x, y} do
       {:dark, a, b} when a == original_x + 2 and b == original_y + 2 ->
@@ -416,4 +353,69 @@ defmodule Checkersgame.Piece do
         end
     end
   end
+
+  # Start of king logic attempts -- unable to get this working in time
+
+  # def start_move_check_king(game, piece, x, y) do
+  #   if Checkersgame.Logic.logic_check_valid(game, piece, x, y) != false do
+  #     game = check
+  #     IO.puts("benedict")
+  #     tempRank = piece.rank
+  #     tempTeam = piece.team
+  #     IO.inspect(tempTeam)
+  #     IO.inspect(tempRank)
+  #     IO.puts("wong")
+  #     # IO.inspect(tempRank)
+  #     # IO.inspect(tempTeam)
+  #     # # IO.inspect(game)
+  #     # IO.puts("alpaca")
+  #
+  #     case {tempRank, tempTeam, x} do
+  #       {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
+  #         IO.inspect(piece)
+  #         game = make_king(game, :dark, x, y)
+  #
+  #       # IO.puts("loki odinson")
+  #
+  #       #  make_king(game, piece)
+  #
+  #       {:normal, :light, 0} when tempRank == :normal and tempTeam == :light ->
+  #         "make king"
+  #
+  #       #  make_king(game, piece)
+  #
+  #       _ ->
+  #         game
+  #     end
+  #
+  #     # if piece.rank(is(:normal) and piece.team(is(:dark and x == 9))) do
+  #     #  piece.rank = :king
+  #     # else
+  #     #  if(piece.rank(is(:normal) and piece.team(is(:light and x == 0))))
+  #     #  piece.rank = :king
+  #     # end
+  #   else
+  #     game
+  #   end
+  # end
+  #
+  # def make_king(game, team, x, y) do
+  #   if team == :dark do
+  #     IO.puts("poor loki")
+  #     # IO.inspect(piece)
+  #     input_piece = Map.get(game.list_dark, [x, y])
+  #     input_piece = Map.put(input_piece, :rank, :king)
+  #     IO.inspect(input_piece)
+  #     list_change = Map.put(game.list_dark, [x, y], input_piece)
+  #     IO.inspect(list_change)
+  #     game = Map.put(game, :list_dark, list_change)
+  # IO.inspect(game)
+  # else
+  #   input_piece = Map.put(input_piece, :rank, :king)
+  #   list_change = Map.put(game.list_light, [x, y], input_piece)
+  #   game = Map.put(game, :list_light, list_change)
+  #   else
+  #     game
+  #   end
+  # end
 end

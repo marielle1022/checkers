@@ -15,51 +15,6 @@ defmodule Checkersgame.Logic do
     end
   end
 
-  # # Update both the original location and the location moved to
-  # def update_piece_board_dark(
-  #       game,
-  #       original_x,
-  #       original_y,
-  #       new_x,
-  #       new_y,
-  #       new_value,
-  #       input_piece
-  #     ) do
-  #   game = Checkersgame.Game.update_board(game, original_x, original_y, 0)
-  #   game = Checkersgame.Game.update_board(game, new_x, new_y, new_value)
-  #   input_piece = Map.put(input_piece, :location_x, new_x)
-  #   input_piece = Map.put(input_piece, :location_y, new_y)
-  #   list_change = Map.delete(game.list_dark, [original_x, original_y])
-  #   list_change = Map.put(list_change, [new_x, new_y], input_piece)
-  #   game = Map.put(game, :list_dark, list_change)
-  #   # IO.inspect(Map.get(game.list_dark, [original_x, original_y]))
-  #   # IO.inspect(input_piece)
-  #   # list_remove = Map.delete(game.list_dark, input_piece)
-  #   # input_piece = Map.put(input_piece, :location_x, new_x)
-  #   # input_piece = Map.put(input_piece, :location_y, new_y)
-  # end
-  #
-  # # Update both the original location and the location moved to
-  # def update_piece_board_light(
-  #       game,
-  #       original_x,
-  #       original_y,
-  #       new_x,
-  #       new_y,
-  #       new_value,
-  #       input_piece
-  #     ) do
-  #   game = Checkersgame.Game.update_board(game, original_x, original_y, 0)
-  #   game = Checkersgame.Game.update_board(game, new_x, new_y, new_value)
-  #   input_piece = Map.put(input_piece, :location_x, new_x)
-  #   input_piece = Map.put(input_piece, :location_y, new_y)
-  #   list_change = Map.delete(game.list_light, [original_x, original_y])
-  #   list_change = Map.put(list_change, [new_x, new_y], input_piece)
-  #   game = Map.put(game, :list_light, list_change)
-  #   # input_piece = Map.put(input_piece, :location_x, new_x)
-  #   # input_piece = Map.put(input_piece, :location_y, new_y)
-  # end
-
   # Dark pieces start at the top
   # Dark pieces are symbolized in the matrix with value 1
   # The (x, y) input represent the location that has been clicked.
@@ -132,8 +87,6 @@ defmodule Checkersgame.Logic do
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
     team_piece = dark_piece.team
-
-    IO.puts("thor")
 
     case {team_piece, x, y} do
       {:dark, a, b} when a == original_x + 2 and b == original_y + 2 ->

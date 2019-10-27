@@ -160,10 +160,9 @@ defmodule Checkersgame.Game do
   # Note: works in iex if pass board as parameter, but doesn't save
   # NB: set up so directly modifies state board? change name to game
   def update_board(game, x, y, value) do
-    IO.puts("bruce banner")
-    IO.inspect(game.board_matrix[x][y])
     # new_board = put_in(game.board_matrix[x][y], value)
-    game = put_in(game.board_matrix[x][y], "war machine")
+    # game = put_in(game.board_matrix[x][y], value
+    game = put_in(game.board_matrix[x][y], value)
     # IO.puts("shuri")
     # IO.inspect(game)
     # game.board_matrix = new_board

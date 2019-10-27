@@ -25,12 +25,13 @@ defmodule Checkersgame.Piece do
   # x and y are location of click
   def start_move_check_king(game, piece, x, y) do
     if check_valid(game, piece, x, y) != false do
-      tempRank = piece.rank
-      tempTeam = piece.team
-      IO.inspect(tempRank)
-      IO.inspect(tempTeam)
-      IO.inspect(game)
-      IO.puts("alpaca")
+      game = check_valid(game, piece, x, y)
+      # tempRank = piece.rank
+      # tempTeam = piece.team
+      # IO.inspect(tempRank)
+      # IO.inspect(tempTeam)
+      # # IO.inspect(game)
+      # IO.puts("alpaca")
 
       # case {tempRank, tempTeam, x} do
       #   {:normal, :dark, 9} when tempRank == :normal and tempTeam == :dark ->
@@ -63,15 +64,20 @@ defmodule Checkersgame.Piece do
     IO.puts("Toph")
 
     case {piece.team, Checkersgame.Game.get_value(game, x, y)} do
-      {:dark, 0} -> check_dark(game, piece, x, y, 1)
-      {:light, 0} -> check_light(game, piece, x, y, 2)
+      {:dark, 0} ->
+        game = check_dark(game, piece, x, y, 1)
+
+      {:light, 0} ->
+        game = check_light(game, piece, x, y, 2)
+
       # This means that the square clicked is light or occupied
-      _ -> false
+      _ ->
+        false
     end
   end
 
-  # Update both the origianl location and the location moved to
-  def update_piece_board(
+  # Update both the original location and the location moved to
+  def update_piece_board_dark(
         game,
         original_x,
         original_y,
@@ -80,19 +86,39 @@ defmodule Checkersgame.Piece do
         new_value,
         input_piece
       ) do
-    IO.puts("groot")
     game = Checkersgame.Game.update_board(game, original_x, original_y, 0)
-    IO.puts("mj")
-    IO.inspect(game)
     game = Checkersgame.Game.update_board(game, new_x, new_y, new_value)
-    IO.puts("guy in the chair")
-    IO.inspect(game)
-    IO.puts("rocket racoon")
-    IO.inspect(input_piece)
     input_piece = Map.put(input_piece, :location_x, new_x)
     input_piece = Map.put(input_piece, :location_y, new_y)
-    IO.puts("mantis")
-    IO.inspect(input_piece)
+    list_change = Map.delete(game.list_dark, [original_x, original_y])
+    list_change = Map.put(list_change, [new_x, new_y], input_piece)
+    game = Map.put(game, :list_dark, list_change)
+    # IO.inspect(Map.get(game.list_dark, [original_x, original_y]))
+    # IO.inspect(input_piece)
+    # list_remove = Map.delete(game.list_dark, input_piece)
+    # input_piece = Map.put(input_piece, :location_x, new_x)
+    # input_piece = Map.put(input_piece, :location_y, new_y)
+  end
+
+  # Update both the original location and the location moved to
+  def update_piece_board_light(
+        game,
+        original_x,
+        original_y,
+        new_x,
+        new_y,
+        new_value,
+        input_piece
+      ) do
+    game = Checkersgame.Game.update_board(game, original_x, original_y, 0)
+    game = Checkersgame.Game.update_board(game, new_x, new_y, new_value)
+    input_piece = Map.put(input_piece, :location_x, new_x)
+    input_piece = Map.put(input_piece, :location_y, new_y)
+    list_change = Map.delete(game.list_light, [original_x, original_y])
+    list_change = Map.put(list_change, [new_x, new_y], input_piece)
+    game = Map.put(game, :list_light, list_change)
+    # input_piece = Map.put(input_piece, :location_x, new_x)
+    # input_piece = Map.put(input_piece, :location_y, new_y)
   end
 
   # Dark pieces start at the top
@@ -104,63 +130,31 @@ defmodule Checkersgame.Piece do
     # Store original values for starting x, y of piece
     original_x = dark_piece.location_x
     original_y = dark_piece.location_y
-    IO.puts("x")
-    IO.puts(x)
-    IO.puts("y")
-    IO.puts(y)
-    IO.puts("original_x")
-    IO.puts(original_x)
-    IO.puts("original_y")
-    IO.puts(original_y)
 
     case {x, y} do
       {a, b} when a == original_x + 1 and b == original_y + 1 ->
-        IO.puts("a")
-        IO.puts(a)
-        IO.puts("b")
-        IO.puts(b)
-        IO.puts("iron man")
-        game = update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
+        game = update_piece_board_dark(game, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 1 and b == original_y - 1 ->
-        IO.puts("a")
-        IO.puts(a)
-        IO.puts("b")
-        IO.puts(b)
-        IO.puts("spider man")
-        update_piece_board(game, original_x, original_y, x, y, new_value, dark_piece)
+        game = update_piece_board_dark(game, original_x, original_y, x, y, new_value, dark_piece)
 
       {a, b} when a == original_x + 2 and b == original_y + 2 ->
-        IO.puts("a")
-        IO.puts(a)
-        IO.puts("b")
-        IO.puts(b)
-        IO.puts("black widow")
-        check_dark_single_jump(game, dark_piece, x, y)
+        game = check_dark_single_jump(game, dark_piece, x, y)
 
       # if (Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == ) do
 
       # Send to function checking valid 1 move jumps
 
       {a, b} when a == original_x + 2 and b == original_y - 2 ->
-        IO.puts("a")
-        IO.puts(a)
-        IO.puts("b")
-        IO.puts(b)
-        IO.puts("man in the chair")
-        check_dark_single_jump(game, dark_piece, x, y)
+        game = check_dark_single_jump(game, dark_piece, x, y)
 
       # Send to function checking valid 1 move jumps
 
       _ ->
-        # IO.puts(a)
-        # IO.puts(b)
         IO.puts("captain america")
         "Send to check >1 move jumps"
         # With any other location, send to function checking valid >1 move jumps
     end
-
-    IO.puts("end")
   end
 
   # Light pieces start at the bottom
@@ -174,10 +168,10 @@ defmodule Checkersgame.Piece do
 
     case {x, y} do
       {a, b} when a == original_x - 1 and b == original_y - 1 ->
-        update_piece_board(game, original_x, original_y, x, y, new_value, light_piece)
+        update_piece_board_light(game, original_x, original_y, x, y, new_value, light_piece)
 
       {a, b} when a == original_x - 1 and b == original_y + 1 ->
-        update_piece_board(game, original_x, original_y, x, y, new_value, light_piece)
+        update_piece_board_light(game, original_x, original_y, x, y, new_value, light_piece)
 
       {a, b} when a == original_x - 2 and b == original_y - 2 ->
         check_light_single_jump(game, light_piece, x, y)
@@ -207,7 +201,7 @@ defmodule Checkersgame.Piece do
     case {team_piece, x, y} do
       {:dark, a, b} when a == original_x + 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == 2 do
-          update_piece_board(
+          update_piece_board_dark(
             game,
             original_x,
             original_y,
@@ -228,7 +222,7 @@ defmodule Checkersgame.Piece do
 
       {:dark, a, b} when a == original_x + 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y - 1) == 2 do
-          update_piece_board(
+          update_piece_board_dark(
             game,
             original_x,
             original_y,
@@ -248,7 +242,7 @@ defmodule Checkersgame.Piece do
       # Used for light kings
       {:light, a, b} when a == original_x + 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y + 1) == 1 do
-          update_piece_board(
+          update_piece_board_light(
             game,
             original_x,
             original_y,
@@ -267,7 +261,7 @@ defmodule Checkersgame.Piece do
 
       {:light, a, b} when a == original_x + 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x + 1, original_y - 1) == 1 do
-          update_piece_board(
+          update_piece_board_light(
             game,
             original_x,
             original_y,
@@ -297,7 +291,7 @@ defmodule Checkersgame.Piece do
     case {team_piece, x, y} do
       {:light, a, b} when a == original_x - 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y - 1) == 1 do
-          update_piece_board(
+          update_piece_board_light(
             game,
             original_x,
             original_y,
@@ -319,7 +313,7 @@ defmodule Checkersgame.Piece do
 
       {:light, a, b} when a == original_x - 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y + 1) == 1 do
-          update_piece_board(
+          update_piece_board_light(
             game,
             original_x,
             original_y,
@@ -340,7 +334,7 @@ defmodule Checkersgame.Piece do
       # Used for dark kings
       {:dark, a, b} when a == original_x - 2 and b == original_y - 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y - 1) == 2 do
-          update_piece_board(
+          update_piece_board_dark(
             game,
             original_x,
             original_y,
@@ -362,7 +356,7 @@ defmodule Checkersgame.Piece do
 
       {:dark, a, b} when a == original_x - 2 and b == original_y + 2 ->
         if Checkersgame.Game.get_value(game, original_x - 1, original_y + 1) == 2 do
-          update_piece_board(
+          update_piece_board_dark(
             game,
             original_x,
             original_y,

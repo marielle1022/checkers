@@ -1,13 +1,20 @@
 Marielle Riveros
+
 Kevin Gendron
+
 10/26/19
+
 5610 Web Development
+
 Checkers
+
 Introduction and Game Description
+
 We have decided to create Checkers. Checkers is an extremely old board game that has retained its popularity to this day. It is meant for only two players and uses a board with alternating light and dark tiles -- however, only one type of tile is actually used. In our version, the game is played on a 10x10 board of alternating red and black tiles (using only the red tiles) with each player starting with 20 pieces. Players can move their pieces forward to a diagonally adjacent square. In the case of most pieces, each turn consists of only moving one tile forward, and only one player can move at a time. Normal pieces can also jump over an opposing piece, removing that piece from the board. In the normal game, players have the option of changing the rank of their pieces from normal to king if they reach the end of the opponent's side of the board. If they do so, they have the freedom of moving in both directions diagonally, which is a big advantage. The goal of the game is to collect all of the opponent’s pieces, or to force your opponent to run out of moves. 
 
 
 UI Design
+
 Our original UI idea was to allow the user to select any of their pieces, and when they do so, that piece would light up. Based on that piece, a list of possible moves would glow on the board, including multiple jump moves. What we were able to accomplish was the piece, followed by tile click move experience. To eliminate confusion, if we were to continue working on this project, we would probably implement the “light up” feature (which is likely just a CSS tweak) as well as handlers that clearly report to the user whether or not they have clicked on a valid move.
         Furthermore, it we would like to have a more clear entrance into the game. The goal was to have a list of active games on the left side of the lobby screen (in our case, the index.html) that users could join in addition to the create game form that we were able to implement. For ease of use, the person that created the game would be player one, and the next person to join would be player two. After that, additional people could join, but no one else would be able to impact the state of the game board. They would be, however, able to join the channel chat of that game. In our game, we were able to get a simple form up and running that allows the user to input their name and the name of the game they would like to create. If another user would like to join that game, they would either have to get the URL of the game from the opponent, or type in the same game name. This is not an ideal an ideal experience, and we would address this if we were to develop this game further.
 
@@ -15,21 +22,25 @@ Our original UI idea was to allow the user to select any of their pieces, and wh
 
 
 Data Structures on the Server
+
 To package up and send the state of the game from the server to the client, we used a map of maps. More specifically, we had a map for the game board, which contained 10 keys representing the rows. Within each row key were 10 column keys (hence map with in a map) that contained the occupancy of that square on the board. The occupancy is represented by an int between -1 and 2; -1 being a position that cannot be moved to (i.e. black square, in our game at least), 0 being an open square, and 1 and 2 representing the dark and light colored pieces. 
 To package the pieces, we used a similar nested map structure. Each piece had two keys: the first being the row the piece is on, and the second being the column. Within the column key, we stored 4 values: the x and y position, the value (1 for dark and 2 for light), and the color of the piece. After a “click” event, an array that stored the x and y of the selected checker piece, the value of the piece, and the destination x and y values would be sent back to the server to be tested against our game logic. Storing in an array allowed us to quickly pick out the tidbits of information we needed to perform each function. Also, the decision to store the state of the board and the pieces in maps was done to allow us to retrieve things more easily from the server, which results in less of a lag for users. 
 
 
 UI to Server Protocol
+
 In our game_channel, we technically have two functions to handle communication between the client and server. Our first handle_in function was designed to take in a “click” event from the client containing the five-element-array I discussed above and map it to a variable. During this exchange, we also back up the state of the game in our backup agent. On the server, we created a corollary click function that takes in the “click” map and the game, and initiates the process of running through our game logic. The second handle in function maintains the message sending on the chat board. The function simply takes in a message event or a “shout” (that being a user hitting the post button the chat window), and broadcasts their message the rest of the users. Unfortunately, though the logic behind this function is most likely correct, we were unable to get the chat feature up and running. 
 Building this network of communication, we ran into a lot of bugs. One of them was because we did not realize that we needed a corresponding click function on the server, which was discovered after days of work. The next was that pushing to our channel, we didn’t have the name of the event and what the event was passing matching up (literally the names were not matching up), which was caused a “Function Clause Error” to be thrown. I mention these things because they are small bumps that took a long time to fix and caused us to reel back on some of the features we were hoping to build.
 
 
 Implementation of game rules
+
 We were able to construct the game using a 10x10 board with each player having 20 tiles. As in the general game, players can move forward by one diagonally adjacent piece. We ran into trouble creating the kings and were unable to debug the functions in time, so our game does not have kings implemented. We do have all the logic set up for the kings’ moves, however, so if we were to develop the game further it would be realistic to believe that we would be able to get kings working after some time. The main problem we had with them was that upon reaching the end of the board, players were unable to move their pieces to the last row -- as in, the board was for some reason not reading the new tile coordinates of the piece. We also were unable to enforce turns. However, all pieces are able to complete legal jumps forward in addition to their normal single-square moves. If we were to develop this further with turns, we would implement a breadth-first search to determine whether a move consisting of multiple jumps is legal, as right now only single-jump moves are possible with each click.
 The winner of the game is determined by whichever player “captures” (ie, removes) all of the other player’s pieces. This aspect has not changed, and we have a tracker which displays how many pieces each player has left. The other ways a game can end include a draw (if no player can make a legal move, or if the game has gone on for too long without a piece being captured by either side) or a win using a different method. This other method is one player “trapping” the other player -- one player maneuvers their pieces in such a way that the other player is unable to make any legal moves whatsoever. Unfortunately we were unable to implement these methods.
 
 
 Challenges and Solutions
+
 One of the biggest challenges, and probably one of the more complicated aspects of this assignment, was getting the client to successfully and consistently communicate with the server. First of all, it took a long time to even figure out how to unpack what was being sent from elixir in react. Once that was completed, getting the handle in function, as I mentioned above, took a very long time and involved many bugs. Then once the map reached the server, even that was a challenge to unbox. Looking back on this assignment, one of the things we probably should have done differently is testing the passing of information between the client and server before either of those two things were completely built. Once that communication channel was successfully established, it would have been easier to build out and test the logic of the board against our event handlers. 
 Another challenge was figuring out how to manage and capture the names of both users and the created games. Though we did not have the time to get into these features, we would have needed to be able to not only handle a message from a given user, but also report which user sent the message. This would require us to somehow store a list of people that have logged into a game table, and grab their name every time they flag an event. Also, to show available tables, we would have needed to store a list of created games, and somehow been able to route the user to that game when they clicked on the link. This would probably be a simple html trick, but it was tough to figure out where and how we would implement it in the phoenix framework. 
 

@@ -180,34 +180,17 @@ defmodule Checkersgame.Game do
   # Update value of number of tokens
   def update_score(game, team) do
     case team do
-      :dark -> game |> Map.put(:total_dark, game[:total_dark] - 1)
-      :light -> game |> Map.put(:total_light, game[:total_light] - 1)
-    end
-  end
-
-  # After a change has been made to a piece's location,
-  # removes the key:value pair with the old location
-  # and adds the key:value pair for the new one
-  def update_piece_list(game, team, piece, new_x, new_y) do
-    case team do
       :dark ->
-        game.list_dark
-        |> Map.put([new_x, new_y], game.list_dark.get(piece))
-        |> Map.delete(piece)
-
-      # Question: Does |> mean Map output from put() is input for first param in Map.delete?
-      # With this, saying function Map.delete/3 is undefined/private
-      # |> Map.delete(game.list_dark, piece)
-      # Question: same issue with above Map.put
+        game = Map.put(game, :total_dark, game.total_dark - 1)
+        IO.puts("QUEEN SHURI")
+        IO.inspect(game)
+        IO.puts("T'challa")
 
       :light ->
-        game.list_light
-        |> Map.put([new_x, new_y], game.list_light.get(piece))
-        |> Map.delete(piece)
-
-        # Question: Does |> mean Map output from put() is input for first param in Map.delete?
-        # With this, saying function Map.delete/3 is undefined/private
-        # |> Map.delete(game.list_light, piece)
+        game = Map.put(game, :total_light, game.total_light - 1)
+        IO.puts("QUEEN OKOYE")
+        IO.inspect(game)
+        IO.puts("M'baku")
     end
   end
 end

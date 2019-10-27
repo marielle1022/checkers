@@ -66,7 +66,6 @@ class GameBoard extends Component {
             move.push(val1);
             move.push(val2)
             move.push(team)
-            console.log("val1: " + val1 + " val2: " + val2 + " team: " + team)
             this.setState({
                 move: move
             })
@@ -202,72 +201,74 @@ class GameBoard extends Component {
         let light_players = this.createLightPieces();
         console.log(board)
         return (
-            <div className="game-board">
+            <div>
+                <div className="game-board">
 
-                {
-                board.map((tile, i) => (
-                    tile.type === 'red' ?
-                    <div
-                        key={i}
-                        className="game-square-red game-square"
-                        style={
-                            {
-                            gridRow: tile.row + 1,
-                            gridColumn: tile.col + 1
-                        }
-                        }
-                        onClick = {() => {this.tileClick(tile)}}
-                    /> :
-                    <div
-                        key={i}
-                        className="game-square-black game-square"
-                        style={
-                            {
-                            gridRow: tile.row + 1,
-                            gridColumn: tile.col + 1
+                    {
+                    board.map((tile, i) => (
+                        tile.type === 'red' ?
+                        <div
+                            key={i}
+                            className="game-square-red game-square"
+                            style={
+                                {
+                                gridRow: tile.row + 1,
+                                gridColumn: tile.col + 1
                             }
-                        }
+                            }
+                            onClick = {() => {this.tileClick(tile)}}
+                        /> :
+                        <div
+                            key={i}
+                            className="game-square-black game-square"
+                            style={
+                                {
+                                gridRow: tile.row + 1,
+                                gridColumn: tile.col + 1
+                                }
+                            }
 
-                    />
-                ))
-                }
+                        />
+                    ))
+                    }
 
-                {
-                dark_players.map((piece, i) => {
-                    return (
-                    <div
-                        key={i}
-                        style={{
-                            gridRow: piece.row + 1,
-                            gridColumn: piece.col + 1
-                        }}
-                        className={piece.team}
-                        onClick = {() => {this.handleClick(piece)}}
-                        >
-                        <img src="/images/blue-piece.png"/>
-                    </div>
-                    )
-                })
-                }
+                    {
+                    dark_players.map((piece, i) => {
+                        return (
+                        <div
+                            key={i}
+                            style={{
+                                gridRow: piece.row + 1,
+                                gridColumn: piece.col + 1
+                            }}
+                            className={piece.team}
+                            onClick = {() => {this.handleClick(piece)}}
+                            >
+                            <img src="/images/blue-piece.png"/>
+                        </div>
+                        )
+                    })
+                    }
 
-                {
-                light_players.map((piece, i) => {
-                    return (
-                    <div
-                        key={i}
-                        style={{
-                            gridRow: piece.row + 1,
-                            gridColumn: piece.col + 1
-                        }}
-                        className={piece.team}
-                        onClick = {() => {this.handleClick(piece)}}
-                        >
-                        <img src="/images/grey-piece.png"/>
-                    </div>
-                    )
-                })
-                }
+                    {
+                    light_players.map((piece, i) => {
+                        return (
+                        <div
+                            key={i}
+                            style={{
+                                gridRow: piece.row + 1,
+                                gridColumn: piece.col + 1
+                            }}
+                            className={piece.team}
+                            onClick = {() => {this.handleClick(piece)}}
+                            >
+                            <img src="/images/grey-piece.png"/>
+                        </div>
+                        )
+                    })
+                    }
 
+                </div>
             </div>
         );
     }

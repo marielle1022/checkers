@@ -1,0 +1,44 @@
+
+Web Dev Spring 2018 Project 1 Status
+
+Answer the following questions:
+
+
+1. What are the names of the members of your team?
+
+Kevin Gendron and Marielle Riveros
+
+2. What's the URL of the github repo with your code for this project?
+
+https://github.com/marielle1022/checkers
+
+
+3. What is the URL(s) that you deployed to?
+
+checkers.mgrathena.info
+
+
+4. Is your app functionality complete? If not, what's missing?
+
+We are missing the functionality of the kings (the logic exists in the code, but we were unable to get it to fully function in time). We also were unable to get the multiple jumps in one turn. We also do not have a chat room.
+
+
+5. Is your app properly deployed? If not, what went wrong?
+
+Yes, the app is properly deployed.
+
+6. What parts of the project did each team member work on?
+
+Kevin focused more on Phoenix and React, while Marielle focused more on Elixir.
+
+
+7. Are all your third-party assets appropriately licensed and credited?
+
+We believe we cited anything that was from a third party. The graphics used for our checkers pieces were created by Kevin.
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Development
+ - Deployment
+ - Submission
+ - Report
